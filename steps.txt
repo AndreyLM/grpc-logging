@@ -1,0 +1,16 @@
+1. cmd/server/main.go
+    - "new pkg/cmd/server --> cmd.RunServer()" 
+2. pkg/cmd/server/server.go
+    - default "context" 
+    - config from "flags"
+    - opens DB connection
+    - v1.NewService "pkg/service/v1/logging-service.go" 
+        * implemantion of api/proto/v1/logging-service.proto
+    - "grpc.RunServer(ctx, v1API, cfg.GRPCPort)"
+        * runs gRPC server, 
+            ** createing new gRPC server
+            ** registering ServiceServer, pointing out created "server" and "service" (proto implementation)
+            ** listen tcp port
+            ** make ServiceServer serve tcp listener  
+
+Overall time:  1m5.996835381s; sema -> 10

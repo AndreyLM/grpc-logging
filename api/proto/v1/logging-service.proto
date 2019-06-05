@@ -1,0 +1,62 @@
+syntax = "proto3";
+package v1;
+
+import "google/protobuf/timestamp.proto";
+
+// ---------------------- << USER LOGS >>
+message UserLog {
+    int64 id = 1;
+    int64 userId = 2;
+    int64 declarationId = 3;
+    string type = 4;
+    string message = 5;
+    google.protobuf.Timestamp createdAt = 6;  
+}
+
+// CREATE
+message CreateUserLogRequest {
+    // API versioning
+    string api = 1;
+    UserLog userLog = 2;
+}
+
+message CreateUserLogResponse {
+    string api = 1;
+    int64 id = 2;
+}
+
+// READ
+message ReadUserLogRequest {
+    string api = 1;
+    int64 id = 2;
+}
+
+message ReadUserLogResponse {
+    string api = 1;
+    UserLog userLog = 2;
+}
+
+// FIND LOGS
+message FindUserLogsRequest {
+    string api = 1;
+    google.protobuf.Timestamp from = 2;
+    google.protobuf.Timestamp to = 3;
+    int64 userId = 4;
+    int64 declarationId = 5;
+    string type = 6;
+    int32 limit = 7;
+    int32 offset = 8;    
+}
+
+message FindUserLogsResponse {
+    string api = 1;
+    repeated UserLog userLogs = 2;
+}
+
+// Services
+service UserLogService {
+    rpc CreateUserLog(CreateUserLogRequest) returns (CreateUserLogResponse);
+    rpc ReadUserLog(ReadUserLogRequest) returns (ReadUserLogResponse);
+    rpc FindUserLogs(FindUserLogsRequest) returns (FindUserLogsResponse);
+}
+
