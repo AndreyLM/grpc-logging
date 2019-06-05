@@ -12,8 +12,13 @@ GRPCARGS= -grpc-port=${GRPCPORT} -db-host=${DBHOST} -db-port=${DBPORT} -db-schem
 run-server:
 	go run ./cmd/server/main.go ${GRPCARGS}
 
+GRPC_PROXY_PORT=9091
+GRPC_ADRESS=localhost:${GRPCPORT}
+run-proxy:
+	go run ./cmd/proxy-server/main.go -grpc-proxy-port=${GRPC_PROXY_PORT} -grpc-server-address=${GRPC_ADRESS}
+
 run-client:
-	go run ./cmd/client/main.go -server=localhost:9090
+	go run ./cmd/client/main.go -server=localhost:${GRPC_PROXY_PORT}
 
 run-client-add-data:
-	go run ./cmd/client-add-data/main.go -server=localhost:9090
+	go run ./cmd/client-add-data/main.go -server=localhost:${GRPC_PROXY_PORT}

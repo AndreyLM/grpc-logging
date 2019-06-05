@@ -1,13 +1,13 @@
 package v1
 
 import (
+	"bytes"
+	"text/template"
 	"time"
+
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/timestamp"
-	"text/template"
-	"bytes"
 )
-
 
 const queryFindUserLog = `
 SELECT * FROM user_logs
@@ -23,14 +23,14 @@ WHERE 1=1
 
 func createQuery(queryTemplate string, model interface{}) (string, error) {
 	type ViewData struct {
-		Model interface{}
-		MakeTime func(*timestamp.Timestamp) string 
+		Model    interface{}
+		MakeTime func(*timestamp.Timestamp) string
 	}
 
 	var data bytes.Buffer
 	t := template.New("")
 	t.Parse(queryTemplate)
-	if err := t.Execute(&data, ViewData{Model: model, MakeTime: func(t *timestamp.Timestamp) ( string ) {
+	if err := t.Execute(&data, ViewData{Model: model, MakeTime: func(t *timestamp.Timestamp) string {
 		t2, _ := ptypes.Timestamp(t)
 		return t2.Format(time.RFC3339)
 		// return t2.Format("2006-01-02 15:04:05")
