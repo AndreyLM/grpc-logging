@@ -1,6 +1,8 @@
 package v1
 
 import (
+	"log"
+
 	"google.golang.org/grpc/codes"
 	// "github.com/davecgh/go-spew/spew"
 	"context"
@@ -20,7 +22,9 @@ func NewLoggingProxyServer(client v1.UserLogServiceClient) v1.UserLogServiceServ
 }
 
 func (s *loggingProxyServer) CreateUserLog(ctx context.Context, req *v1.CreateUserLogRequest) (*v1.CreateUserLogResponse, error) {
+	start := time.Now()
 	if err := checkAPI(req.Api); err != nil {
+		log.Println("Proxy<<CreateUserLog>>. Error: " + err.Error())
 		return nil, err
 	}
 
@@ -29,13 +33,17 @@ func (s *loggingProxyServer) CreateUserLog(ctx context.Context, req *v1.CreateUs
 
 	res, err := s.client.CreateUserLog(ctx, req)
 	if err != nil {
+		log.Println("Proxy<<CreateUserLog>>. Error: " + err.Error())
 		return nil, status.Error(codes.Unknown, "<<PROXY>> error making 'CreateUserLog' request to service: "+err.Error())
 	}
+	log.Println("Proxy<<CreateUserLog>>. Duration: ", time.Since(start))
 	return res, nil
 }
 
 func (s *loggingProxyServer) ReadUserLog(ctx context.Context, req *v1.ReadUserLogRequest) (*v1.ReadUserLogResponse, error) {
+	start := time.Now()
 	if err := checkAPI(req.Api); err != nil {
+		log.Println("Proxy<<ReadUserLog>>. Error: " + err.Error())
 		return nil, err
 	}
 
@@ -44,13 +52,17 @@ func (s *loggingProxyServer) ReadUserLog(ctx context.Context, req *v1.ReadUserLo
 
 	res, err := s.client.ReadUserLog(ctx, req)
 	if err != nil {
+		log.Println("Proxy<<ReadUserLog>>. Error: " + err.Error())
 		return nil, status.Error(codes.Unknown, "<<PROXY>> error making 'ReadUserLog' request to service: "+err.Error())
 	}
+	log.Println("Proxy<<ReadUserLog>>. Duration: ", time.Since(start))
 	return res, nil
 }
 
 func (s *loggingProxyServer) FindUserLogs(ctx context.Context, req *v1.FindUserLogsRequest) (*v1.FindUserLogsResponse, error) {
+	start := time.Now()
 	if err := checkAPI(req.Api); err != nil {
+		log.Println("Proxy<<FindUserLogs>>. Error: " + err.Error())
 		return nil, err
 	}
 
@@ -59,7 +71,10 @@ func (s *loggingProxyServer) FindUserLogs(ctx context.Context, req *v1.FindUserL
 
 	res, err := s.client.FindUserLogs(ctx, req)
 	if err != nil {
+		log.Println("Proxy<<FindUserLogs>>. Error: " + err.Error())
 		return nil, status.Error(codes.Unknown, "<<PROXY>> error making 'FindUserLogs' request to service: "+err.Error())
 	}
+
+	log.Println("Proxy<<FindUserLogs>>. Duration: ", time.Since(start))
 	return res, nil
 }

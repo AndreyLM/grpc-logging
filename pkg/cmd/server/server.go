@@ -4,28 +4,32 @@ import (
 	// "os"
 	// "github.com/davecgh/go-spew/spew"
 	// "log"
+	"context"
+	"database/sql"
+	"flag"
+	"fmt"
+	"log"
+
+	"github.com/andreylm/grpc-logging/pkg/protocol/grpc"
+	v1 "github.com/andreylm/grpc-logging/pkg/service/v1"
+
 	// postgres dialect for sql connection
 	_ "github.com/lib/pq"
-	"github.com/andreylm/grpc-logging/pkg/protocol/grpc"
-	"github.com/andreylm/grpc-logging/pkg/service/v1"
-	"database/sql"
-	"fmt"
-	"flag"
-	"context"
 )
 
 // Config - configuration for Server
 type Config struct {
-	GRPCPort string
-	DBHost string
-	DBPort string
-	DBUser string
+	GRPCPort   string
+	DBHost     string
+	DBPort     string
+	DBUser     string
 	DBPassword string
-	DBSchema string
+	DBSchema   string
 }
 
 // RunServer - runs server
 func RunServer() error {
+	log.Println("Running server...")
 	ctx := context.Background()
 	var cfg Config
 	flag.StringVar(&cfg.GRPCPort, "grpc-port", "", "gRPC port to bind")
@@ -47,7 +51,7 @@ func RunServer() error {
 		cfg.DBUser,
 		cfg.DBPassword,
 		cfg.DBSchema,
-		)
+	)
 
 	db, err := sql.Open("postgres", dsn)
 	db.SetMaxOpenConns(20)
@@ -63,7 +67,6 @@ func RunServer() error {
 	}
 
 	v1API := v1.NewLoggingService(db)
-
 
 	return grpc.RunServer(ctx, v1API, cfg.GRPCPort)
 }

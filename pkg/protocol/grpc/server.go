@@ -1,12 +1,13 @@
 package grpc
 
 import (
-	"log"
-	"os"
 	"context"
-	"google.golang.org/grpc"
+	"log"
 	"net"
-	"github.com/andreylm/grpc-logging/pkg/api/v1"
+	"os"
+
+	v1 "github.com/andreylm/grpc-logging/pkg/api/v1"
+	"google.golang.org/grpc"
 )
 
 // RunServer - runs server
