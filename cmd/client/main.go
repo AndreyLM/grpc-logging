@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/golang/protobuf/ptypes"
-	"time"
 	"context"
-	"github.com/andreylm/grpc-logging/pkg/api/v1"
-	"log"
 	"flag"
+	"log"
+	"time"
+
+	v1 "github.com/andreylm/grpc-logging/pkg/api/v1"
+	"github.com/golang/protobuf/ptypes"
 	"google.golang.org/grpc"
 )
 
@@ -33,15 +34,14 @@ func main() {
 
 	createdAt, _ := ptypes.TimestampProto(time.Now())
 
-	// Call Create
 	req1 := v1.CreateUserLogRequest{
 		Api: apiVersion,
 		UserLog: &v1.UserLog{
-			UserId: 1,
+			UserId:        1,
 			DeclarationId: 4,
-			Type: "Deleting some data",
-			CreatedAt: createdAt,
-			Message: "Testing grpc service",
+			Type:          "Deleting some data",
+			CreatedAt:     createdAt,
+			Message:       "Testing grpc service",
 		},
 	}
 	res1, err := cli.CreateUserLog(ctx, &req1)
@@ -50,12 +50,9 @@ func main() {
 	}
 	log.Printf("Create result: <%+v>\n\n", res1)
 
-	id := res1.Id
-
-	// Read
 	req2 := v1.ReadUserLogRequest{
 		Api: apiVersion,
-		Id:  id,
+		Id:  1,
 	}
 	res2, err := cli.ReadUserLog(ctx, &req2)
 	if err != nil {
@@ -64,9 +61,9 @@ func main() {
 	log.Println(res2)
 
 	// FIND
-	timeFrom, _ := ptypes.TimestampProto(time.Now().Add(-time.Minute*20))
+	timeFrom, _ := ptypes.TimestampProto(time.Now().Add(-time.Minute * 20))
 	req3 := &v1.FindUserLogsRequest{
-		Api: apiVersion,
+		Api:  apiVersion,
 		From: timeFrom,
 	}
 
@@ -75,4 +72,32 @@ func main() {
 		log.Fatalf("Find failed: %v", err)
 	}
 	log.Printf("Find result: <%+v>\n\n", res4)
+
+	cli2 := v1.NewExchangeLogServiceClient(conn)
+	req4 := v1.CreateExchangeLogRequest{
+		Api: apiVersion,
+		ExchageLog: &v1.ExchangeLog{
+			TypeId:        3,
+			StateId:       3,
+			RequestId:     3,
+			DeclarationId: 3,
+			RegisterId:    "Register ID",
+			Content:       "Some content",
+		},
+	}
+	res5, err := cli2.CreateExchangeLog(ctx, &req4)
+	if err != nil {
+		log.Fatalf("Create Failed: %v", err)
+	}
+	log.Printf("Create response: <%+v>\n\n", res5)
+
+	req5 := v1.FindExchangeLogsRequest{
+		Api:    apiVersion,
+		TypeId: 3,
+	}
+	res6, err := cli2.FindExchangeLogs(ctx, &req5)
+	if err != nil {
+		log.Fatalf("<<Exchange service>> Error find: <%+v>", err)
+	}
+	log.Printf("<<Exchange service>> Find respose: <%+v>", res6)
 }

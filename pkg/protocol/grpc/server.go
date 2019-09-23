@@ -11,13 +11,16 @@ import (
 )
 
 // RunServer - runs server
-func RunServer(ctx context.Context, v1API v1.UserLogServiceServer, port string) error {
+func RunServer(ctx context.Context, v1API v1.UserLogServiceServer, v1APIExchange v1.ExchangeLogServiceServer, port string) error {
 	listen, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		return err
 	}
 	server := grpc.NewServer()
+
 	v1.RegisterUserLogServiceServer(server, v1API)
+	v1.RegisterExchangeLogServiceServer(server, v1APIExchange)
+
 	c := make(chan os.Signal, 1)
 	go func() {
 		for range c {

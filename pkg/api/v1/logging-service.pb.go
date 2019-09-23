@@ -437,6 +437,362 @@ func (m *FindUserLogsResponse) GetUserLogs() []*UserLog {
 	return nil
 }
 
+// EXCHANGES
+type ExchangeLog struct {
+	TypeId               int64                `protobuf:"varint,1,opt,name=typeId,proto3" json:"typeId,omitempty"`
+	StateId              int64                `protobuf:"varint,2,opt,name=stateId,proto3" json:"stateId,omitempty"`
+	RequestId            int64                `protobuf:"varint,3,opt,name=requestId,proto3" json:"requestId,omitempty"`
+	DeclarationId        int64                `protobuf:"varint,4,opt,name=declarationId,proto3" json:"declarationId,omitempty"`
+	RegisterId           string               `protobuf:"bytes,5,opt,name=registerId,proto3" json:"registerId,omitempty"`
+	Content              string               `protobuf:"bytes,6,opt,name=content,proto3" json:"content,omitempty"`
+	CreatedAt            *timestamp.Timestamp `protobuf:"bytes,7,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
+}
+
+func (m *ExchangeLog) Reset()         { *m = ExchangeLog{} }
+func (m *ExchangeLog) String() string { return proto.CompactTextString(m) }
+func (*ExchangeLog) ProtoMessage()    {}
+func (*ExchangeLog) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1fb7a78083aef92b, []int{7}
+}
+
+func (m *ExchangeLog) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ExchangeLog.Unmarshal(m, b)
+}
+func (m *ExchangeLog) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ExchangeLog.Marshal(b, m, deterministic)
+}
+func (m *ExchangeLog) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ExchangeLog.Merge(m, src)
+}
+func (m *ExchangeLog) XXX_Size() int {
+	return xxx_messageInfo_ExchangeLog.Size(m)
+}
+func (m *ExchangeLog) XXX_DiscardUnknown() {
+	xxx_messageInfo_ExchangeLog.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ExchangeLog proto.InternalMessageInfo
+
+func (m *ExchangeLog) GetTypeId() int64 {
+	if m != nil {
+		return m.TypeId
+	}
+	return 0
+}
+
+func (m *ExchangeLog) GetStateId() int64 {
+	if m != nil {
+		return m.StateId
+	}
+	return 0
+}
+
+func (m *ExchangeLog) GetRequestId() int64 {
+	if m != nil {
+		return m.RequestId
+	}
+	return 0
+}
+
+func (m *ExchangeLog) GetDeclarationId() int64 {
+	if m != nil {
+		return m.DeclarationId
+	}
+	return 0
+}
+
+func (m *ExchangeLog) GetRegisterId() string {
+	if m != nil {
+		return m.RegisterId
+	}
+	return ""
+}
+
+func (m *ExchangeLog) GetContent() string {
+	if m != nil {
+		return m.Content
+	}
+	return ""
+}
+
+func (m *ExchangeLog) GetCreatedAt() *timestamp.Timestamp {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return nil
+}
+
+type CreateExchangeLogRequest struct {
+	Api                  string       `protobuf:"bytes,1,opt,name=api,proto3" json:"api,omitempty"`
+	ExchageLog           *ExchangeLog `protobuf:"bytes,2,opt,name=exchageLog,proto3" json:"exchageLog,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
+}
+
+func (m *CreateExchangeLogRequest) Reset()         { *m = CreateExchangeLogRequest{} }
+func (m *CreateExchangeLogRequest) String() string { return proto.CompactTextString(m) }
+func (*CreateExchangeLogRequest) ProtoMessage()    {}
+func (*CreateExchangeLogRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1fb7a78083aef92b, []int{8}
+}
+
+func (m *CreateExchangeLogRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CreateExchangeLogRequest.Unmarshal(m, b)
+}
+func (m *CreateExchangeLogRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CreateExchangeLogRequest.Marshal(b, m, deterministic)
+}
+func (m *CreateExchangeLogRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateExchangeLogRequest.Merge(m, src)
+}
+func (m *CreateExchangeLogRequest) XXX_Size() int {
+	return xxx_messageInfo_CreateExchangeLogRequest.Size(m)
+}
+func (m *CreateExchangeLogRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CreateExchangeLogRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CreateExchangeLogRequest proto.InternalMessageInfo
+
+func (m *CreateExchangeLogRequest) GetApi() string {
+	if m != nil {
+		return m.Api
+	}
+	return ""
+}
+
+func (m *CreateExchangeLogRequest) GetExchageLog() *ExchangeLog {
+	if m != nil {
+		return m.ExchageLog
+	}
+	return nil
+}
+
+type CreateExchangeLogResponse struct {
+	Api                  string   `protobuf:"bytes,1,opt,name=api,proto3" json:"api,omitempty"`
+	Status               int64    `protobuf:"varint,2,opt,name=status,proto3" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CreateExchangeLogResponse) Reset()         { *m = CreateExchangeLogResponse{} }
+func (m *CreateExchangeLogResponse) String() string { return proto.CompactTextString(m) }
+func (*CreateExchangeLogResponse) ProtoMessage()    {}
+func (*CreateExchangeLogResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1fb7a78083aef92b, []int{9}
+}
+
+func (m *CreateExchangeLogResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CreateExchangeLogResponse.Unmarshal(m, b)
+}
+func (m *CreateExchangeLogResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CreateExchangeLogResponse.Marshal(b, m, deterministic)
+}
+func (m *CreateExchangeLogResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateExchangeLogResponse.Merge(m, src)
+}
+func (m *CreateExchangeLogResponse) XXX_Size() int {
+	return xxx_messageInfo_CreateExchangeLogResponse.Size(m)
+}
+func (m *CreateExchangeLogResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_CreateExchangeLogResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CreateExchangeLogResponse proto.InternalMessageInfo
+
+func (m *CreateExchangeLogResponse) GetApi() string {
+	if m != nil {
+		return m.Api
+	}
+	return ""
+}
+
+func (m *CreateExchangeLogResponse) GetStatus() int64 {
+	if m != nil {
+		return m.Status
+	}
+	return 0
+}
+
+type FindExchangeLogsRequest struct {
+	Api                  string               `protobuf:"bytes,1,opt,name=api,proto3" json:"api,omitempty"`
+	From                 *timestamp.Timestamp `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`
+	To                   *timestamp.Timestamp `protobuf:"bytes,3,opt,name=to,proto3" json:"to,omitempty"`
+	TypeId               int64                `protobuf:"varint,4,opt,name=typeId,proto3" json:"typeId,omitempty"`
+	StateId              int64                `protobuf:"varint,5,opt,name=stateId,proto3" json:"stateId,omitempty"`
+	RequestId            int64                `protobuf:"varint,6,opt,name=requestId,proto3" json:"requestId,omitempty"`
+	DeclarationId        int64                `protobuf:"varint,7,opt,name=declarationId,proto3" json:"declarationId,omitempty"`
+	RegisterId           string               `protobuf:"bytes,8,opt,name=registerId,proto3" json:"registerId,omitempty"`
+	Content              string               `protobuf:"bytes,9,opt,name=content,proto3" json:"content,omitempty"`
+	Limit                int64                `protobuf:"varint,10,opt,name=limit,proto3" json:"limit,omitempty"`
+	Offset               int64                `protobuf:"varint,11,opt,name=offset,proto3" json:"offset,omitempty"`
+	OrderBy              string               `protobuf:"bytes,12,opt,name=orderBy,proto3" json:"orderBy,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
+}
+
+func (m *FindExchangeLogsRequest) Reset()         { *m = FindExchangeLogsRequest{} }
+func (m *FindExchangeLogsRequest) String() string { return proto.CompactTextString(m) }
+func (*FindExchangeLogsRequest) ProtoMessage()    {}
+func (*FindExchangeLogsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1fb7a78083aef92b, []int{10}
+}
+
+func (m *FindExchangeLogsRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_FindExchangeLogsRequest.Unmarshal(m, b)
+}
+func (m *FindExchangeLogsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_FindExchangeLogsRequest.Marshal(b, m, deterministic)
+}
+func (m *FindExchangeLogsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FindExchangeLogsRequest.Merge(m, src)
+}
+func (m *FindExchangeLogsRequest) XXX_Size() int {
+	return xxx_messageInfo_FindExchangeLogsRequest.Size(m)
+}
+func (m *FindExchangeLogsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_FindExchangeLogsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_FindExchangeLogsRequest proto.InternalMessageInfo
+
+func (m *FindExchangeLogsRequest) GetApi() string {
+	if m != nil {
+		return m.Api
+	}
+	return ""
+}
+
+func (m *FindExchangeLogsRequest) GetFrom() *timestamp.Timestamp {
+	if m != nil {
+		return m.From
+	}
+	return nil
+}
+
+func (m *FindExchangeLogsRequest) GetTo() *timestamp.Timestamp {
+	if m != nil {
+		return m.To
+	}
+	return nil
+}
+
+func (m *FindExchangeLogsRequest) GetTypeId() int64 {
+	if m != nil {
+		return m.TypeId
+	}
+	return 0
+}
+
+func (m *FindExchangeLogsRequest) GetStateId() int64 {
+	if m != nil {
+		return m.StateId
+	}
+	return 0
+}
+
+func (m *FindExchangeLogsRequest) GetRequestId() int64 {
+	if m != nil {
+		return m.RequestId
+	}
+	return 0
+}
+
+func (m *FindExchangeLogsRequest) GetDeclarationId() int64 {
+	if m != nil {
+		return m.DeclarationId
+	}
+	return 0
+}
+
+func (m *FindExchangeLogsRequest) GetRegisterId() string {
+	if m != nil {
+		return m.RegisterId
+	}
+	return ""
+}
+
+func (m *FindExchangeLogsRequest) GetContent() string {
+	if m != nil {
+		return m.Content
+	}
+	return ""
+}
+
+func (m *FindExchangeLogsRequest) GetLimit() int64 {
+	if m != nil {
+		return m.Limit
+	}
+	return 0
+}
+
+func (m *FindExchangeLogsRequest) GetOffset() int64 {
+	if m != nil {
+		return m.Offset
+	}
+	return 0
+}
+
+func (m *FindExchangeLogsRequest) GetOrderBy() string {
+	if m != nil {
+		return m.OrderBy
+	}
+	return ""
+}
+
+type FindExchangeLogsResponse struct {
+	Api                  string         `protobuf:"bytes,1,opt,name=api,proto3" json:"api,omitempty"`
+	ExchageLogs          []*ExchangeLog `protobuf:"bytes,2,rep,name=exchageLogs,proto3" json:"exchageLogs,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *FindExchangeLogsResponse) Reset()         { *m = FindExchangeLogsResponse{} }
+func (m *FindExchangeLogsResponse) String() string { return proto.CompactTextString(m) }
+func (*FindExchangeLogsResponse) ProtoMessage()    {}
+func (*FindExchangeLogsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1fb7a78083aef92b, []int{11}
+}
+
+func (m *FindExchangeLogsResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_FindExchangeLogsResponse.Unmarshal(m, b)
+}
+func (m *FindExchangeLogsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_FindExchangeLogsResponse.Marshal(b, m, deterministic)
+}
+func (m *FindExchangeLogsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FindExchangeLogsResponse.Merge(m, src)
+}
+func (m *FindExchangeLogsResponse) XXX_Size() int {
+	return xxx_messageInfo_FindExchangeLogsResponse.Size(m)
+}
+func (m *FindExchangeLogsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_FindExchangeLogsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_FindExchangeLogsResponse proto.InternalMessageInfo
+
+func (m *FindExchangeLogsResponse) GetApi() string {
+	if m != nil {
+		return m.Api
+	}
+	return ""
+}
+
+func (m *FindExchangeLogsResponse) GetExchageLogs() []*ExchangeLog {
+	if m != nil {
+		return m.ExchageLogs
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*UserLog)(nil), "v1.UserLog")
 	proto.RegisterType((*CreateUserLogRequest)(nil), "v1.CreateUserLogRequest")
@@ -445,41 +801,61 @@ func init() {
 	proto.RegisterType((*ReadUserLogResponse)(nil), "v1.ReadUserLogResponse")
 	proto.RegisterType((*FindUserLogsRequest)(nil), "v1.FindUserLogsRequest")
 	proto.RegisterType((*FindUserLogsResponse)(nil), "v1.FindUserLogsResponse")
+	proto.RegisterType((*ExchangeLog)(nil), "v1.ExchangeLog")
+	proto.RegisterType((*CreateExchangeLogRequest)(nil), "v1.CreateExchangeLogRequest")
+	proto.RegisterType((*CreateExchangeLogResponse)(nil), "v1.CreateExchangeLogResponse")
+	proto.RegisterType((*FindExchangeLogsRequest)(nil), "v1.FindExchangeLogsRequest")
+	proto.RegisterType((*FindExchangeLogsResponse)(nil), "v1.FindExchangeLogsResponse")
 }
 
 func init() { proto.RegisterFile("logging-service.proto", fileDescriptor_1fb7a78083aef92b) }
 
 var fileDescriptor_1fb7a78083aef92b = []byte{
-	// 454 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x53, 0x6d, 0x8b, 0xd3, 0x40,
-	0x10, 0x26, 0xdb, 0xb7, 0xeb, 0xd4, 0x3b, 0x64, 0xae, 0x77, 0xae, 0xf9, 0x62, 0x08, 0x8a, 0x45,
-	0x30, 0xc7, 0x55, 0x10, 0xfd, 0x22, 0x1c, 0x8a, 0x70, 0x20, 0x8a, 0x51, 0x7f, 0x40, 0xda, 0x4c,
-	0xc3, 0x42, 0xd3, 0x8d, 0xd9, 0x6d, 0xc1, 0xcf, 0xfe, 0x30, 0x7f, 0x87, 0xff, 0x46, 0xb2, 0xd9,
-	0x68, 0xd2, 0xa6, 0xf1, 0xbe, 0xed, 0x3c, 0xf3, 0xcc, 0xec, 0xcc, 0xb3, 0xcf, 0xc2, 0xc5, 0x5a,
-	0x26, 0x89, 0xd8, 0x24, 0xcf, 0x15, 0xe5, 0x3b, 0xb1, 0xa4, 0x20, 0xcb, 0xa5, 0x96, 0xc8, 0x76,
-	0xd7, 0xee, 0xa3, 0x44, 0xca, 0x64, 0x4d, 0x57, 0x06, 0x59, 0x6c, 0x57, 0x57, 0x5a, 0xa4, 0xa4,
-	0x74, 0x94, 0x66, 0x25, 0xc9, 0xff, 0xe5, 0xc0, 0xe8, 0x9b, 0xa2, 0xfc, 0x83, 0x4c, 0xf0, 0x0c,
-	0x98, 0x88, 0xb9, 0xe3, 0x39, 0xb3, 0x5e, 0xc8, 0x44, 0x8c, 0x97, 0x30, 0xdc, 0x2a, 0xca, 0x6f,
-	0x63, 0xce, 0x0c, 0x66, 0x23, 0x7c, 0x0c, 0xa7, 0x31, 0x2d, 0xd7, 0x51, 0x1e, 0x69, 0x21, 0x37,
-	0xb7, 0x31, 0xef, 0x99, 0x74, 0x13, 0x44, 0x84, 0xbe, 0xfe, 0x91, 0x11, 0xef, 0x7b, 0xce, 0x6c,
-	0x1c, 0x9a, 0x33, 0x72, 0x18, 0xa5, 0xa4, 0x54, 0x94, 0x10, 0x1f, 0x18, 0xb8, 0x0a, 0xf1, 0x15,
-	0x8c, 0x97, 0x39, 0x45, 0x9a, 0xe2, 0x1b, 0xcd, 0x87, 0x9e, 0x33, 0x9b, 0xcc, 0xdd, 0xa0, 0x1c,
-	0x3e, 0xa8, 0x86, 0x0f, 0xbe, 0x56, 0xc3, 0x87, 0xff, 0xc8, 0xfe, 0x27, 0x98, 0xbe, 0x35, 0x81,
-	0x5d, 0x23, 0xa4, 0xef, 0x5b, 0x52, 0x1a, 0xef, 0x43, 0x2f, 0xca, 0x84, 0x59, 0x67, 0x1c, 0x16,
-	0x47, 0x7c, 0x02, 0xa3, 0x6d, 0xc9, 0x31, 0x0b, 0x4d, 0xe6, 0x93, 0x60, 0x77, 0x1d, 0x54, 0x65,
-	0x55, 0xce, 0x7f, 0x0d, 0x17, 0x7b, 0x0d, 0x55, 0x26, 0x37, 0x8a, 0x5a, 0x3a, 0x96, 0x8a, 0xb1,
-	0x4a, 0x31, 0xff, 0x25, 0x60, 0x48, 0x51, 0xfc, 0xdf, 0x49, 0xf6, 0xeb, 0x3e, 0xc2, 0x79, 0xa3,
-	0xee, 0xe8, 0x85, 0x77, 0x5c, 0xe1, 0x27, 0x83, 0xf3, 0xf7, 0x62, 0x53, 0x35, 0x54, 0xc7, 0x27,
-	0x09, 0xa0, 0xbf, 0xca, 0x65, 0x6a, 0xbb, 0x75, 0x49, 0x6e, 0x78, 0xf8, 0x0c, 0x98, 0x96, 0xe6,
-	0xc1, 0xbb, 0xd9, 0x4c, 0xcb, 0x9a, 0x7f, 0xfa, 0xdd, 0xfe, 0x19, 0x74, 0xf9, 0x67, 0x58, 0xf3,
-	0xcf, 0x14, 0x06, 0x6b, 0x91, 0x0a, 0xcd, 0x47, 0x9e, 0x33, 0x1b, 0x84, 0x65, 0x50, 0xdc, 0x23,
-	0x57, 0x2b, 0x45, 0x9a, 0x9f, 0x18, 0xd8, 0x46, 0xfe, 0x67, 0x98, 0x36, 0x45, 0x38, 0x2a, 0xeb,
-	0x53, 0x38, 0xb1, 0xd2, 0x29, 0xce, 0xbc, 0xde, 0xbe, 0xae, 0x7f, 0x93, 0xf3, 0xdf, 0x0e, 0x9c,
-	0x59, 0xf4, 0x4b, 0xf9, 0xd9, 0xf0, 0x1d, 0x9c, 0x36, 0xec, 0x82, 0xbc, 0x28, 0x6d, 0xb3, 0xa4,
-	0xfb, 0xb0, 0x25, 0x63, 0x67, 0x7a, 0x03, 0x93, 0x9a, 0x03, 0xf0, 0xb2, 0x60, 0x1e, 0x5a, 0xc9,
-	0x7d, 0x70, 0x80, 0xdb, 0xfa, 0x1b, 0xb8, 0x57, 0xdf, 0x15, 0x0d, 0xb1, 0xc5, 0x02, 0x2e, 0x3f,
-	0x4c, 0x94, 0x2d, 0x16, 0x43, 0xf3, 0x8c, 0x2f, 0xfe, 0x04, 0x00, 0x00, 0xff, 0xff, 0xeb, 0x36,
-	0xcf, 0x45, 0x4f, 0x04, 0x00, 0x00,
+	// 698 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x55, 0x4b, 0x6f, 0xd3, 0x40,
+	0x10, 0x96, 0x9d, 0x57, 0x33, 0x6e, 0x4b, 0xd9, 0xb6, 0xe9, 0xd6, 0x14, 0x88, 0x2c, 0x10, 0x11,
+	0x12, 0xae, 0x1a, 0x24, 0x04, 0x17, 0xa4, 0x02, 0x45, 0xaa, 0xc4, 0xd3, 0xc0, 0x11, 0x21, 0x37,
+	0xde, 0x18, 0x4b, 0x89, 0x37, 0x78, 0x37, 0x15, 0x3d, 0xf3, 0x9b, 0x38, 0xf3, 0x3b, 0xf8, 0x25,
+	0x1c, 0x41, 0xfb, 0x4a, 0x9c, 0xd8, 0x4e, 0xe1, 0xc4, 0xcd, 0xf3, 0xd8, 0xd9, 0x99, 0x6f, 0xbe,
+	0x6f, 0x0d, 0xbb, 0x23, 0x1a, 0xc7, 0x49, 0x1a, 0xdf, 0x63, 0x24, 0x3b, 0x4f, 0x06, 0xc4, 0x9f,
+	0x64, 0x94, 0x53, 0x64, 0x9f, 0x1f, 0xb9, 0x37, 0x63, 0x4a, 0xe3, 0x11, 0x39, 0x94, 0x9e, 0xb3,
+	0xe9, 0xf0, 0x90, 0x27, 0x63, 0xc2, 0x78, 0x38, 0x9e, 0xa8, 0x24, 0xef, 0x87, 0x05, 0xad, 0x0f,
+	0x8c, 0x64, 0x2f, 0x68, 0x8c, 0x36, 0xc1, 0x4e, 0x22, 0x6c, 0x75, 0xad, 0x5e, 0x2d, 0xb0, 0x93,
+	0x08, 0x75, 0xa0, 0x39, 0x65, 0x24, 0x3b, 0x8d, 0xb0, 0x2d, 0x7d, 0xda, 0x42, 0xb7, 0x60, 0x23,
+	0x22, 0x83, 0x51, 0x98, 0x85, 0x3c, 0xa1, 0xe9, 0x69, 0x84, 0x6b, 0x32, 0xbc, 0xe8, 0x44, 0x08,
+	0xea, 0xfc, 0x62, 0x42, 0x70, 0xbd, 0x6b, 0xf5, 0xda, 0x81, 0xfc, 0x46, 0x18, 0x5a, 0x63, 0xc2,
+	0x58, 0x18, 0x13, 0xdc, 0x90, 0x6e, 0x63, 0xa2, 0x87, 0xd0, 0x1e, 0x64, 0x24, 0xe4, 0x24, 0x3a,
+	0xe6, 0xb8, 0xd9, 0xb5, 0x7a, 0x4e, 0xdf, 0xf5, 0x55, 0xf3, 0xbe, 0x69, 0xde, 0x7f, 0x6f, 0x9a,
+	0x0f, 0xe6, 0xc9, 0xde, 0x6b, 0xd8, 0x79, 0x2a, 0x0d, 0x3d, 0x46, 0x40, 0xbe, 0x4c, 0x09, 0xe3,
+	0x68, 0x0b, 0x6a, 0xe1, 0x24, 0x91, 0xe3, 0xb4, 0x03, 0xf1, 0x89, 0x6e, 0x43, 0x6b, 0xaa, 0x72,
+	0xe4, 0x40, 0x4e, 0xdf, 0xf1, 0xcf, 0x8f, 0x7c, 0x73, 0xcc, 0xc4, 0xbc, 0x47, 0xb0, 0xbb, 0x54,
+	0x90, 0x4d, 0x68, 0xca, 0x48, 0x49, 0x45, 0x85, 0x98, 0x6d, 0x10, 0xf3, 0x1e, 0x00, 0x0a, 0x48,
+	0x18, 0x5d, 0xda, 0xc9, 0xf2, 0xb9, 0x57, 0xb0, 0xbd, 0x70, 0xae, 0xf2, 0xc2, 0xbf, 0x1c, 0xe1,
+	0x9b, 0x0d, 0xdb, 0xcf, 0x93, 0xd4, 0x14, 0x64, 0xd5, 0x9d, 0xf8, 0x50, 0x1f, 0x66, 0x74, 0xac,
+	0xab, 0xad, 0x82, 0x5c, 0xe6, 0xa1, 0xbb, 0x60, 0x73, 0x2a, 0x17, 0xbe, 0x3a, 0xdb, 0xe6, 0x34,
+	0xc7, 0x9f, 0xfa, 0x6a, 0xfe, 0x34, 0x56, 0xf1, 0xa7, 0x99, 0xe3, 0xcf, 0x0e, 0x34, 0x46, 0xc9,
+	0x38, 0xe1, 0xb8, 0xd5, 0xb5, 0x7a, 0x8d, 0x40, 0x19, 0xe2, 0x1e, 0x3a, 0x1c, 0x32, 0xc2, 0xf1,
+	0x9a, 0x74, 0x6b, 0xcb, 0x7b, 0x0b, 0x3b, 0x8b, 0x20, 0x54, 0xc2, 0x7a, 0x07, 0xd6, 0x34, 0x74,
+	0x0c, 0xdb, 0xdd, 0xda, 0x32, 0xae, 0xb3, 0xa0, 0xf7, 0xcb, 0x02, 0xe7, 0xe4, 0xeb, 0xe0, 0x73,
+	0x98, 0xc6, 0x44, 0x48, 0xa6, 0x03, 0x4d, 0xd1, 0xd8, 0xa9, 0x91, 0x8d, 0xb6, 0x04, 0xd1, 0x19,
+	0x0f, 0x39, 0x99, 0x69, 0xc7, 0x98, 0xe8, 0x00, 0xda, 0x99, 0xda, 0xc6, 0x4c, 0x38, 0x73, 0x47,
+	0x11, 0x9a, 0x7a, 0x19, 0x34, 0x37, 0x00, 0x32, 0x12, 0x27, 0x8c, 0x4b, 0x70, 0x95, 0x92, 0x72,
+	0x1e, 0x71, 0xfb, 0x80, 0xa6, 0x9c, 0xa4, 0x5c, 0xa3, 0x67, 0xcc, 0x45, 0x99, 0xb5, 0xfe, 0x45,
+	0x66, 0x1f, 0x01, 0x2b, 0x55, 0xe4, 0xc6, 0xaf, 0xa6, 0xd5, 0x21, 0x00, 0x11, 0x79, 0x32, 0x4d,
+	0x93, 0xeb, 0x8a, 0x80, 0x34, 0x7f, 0x3a, 0x97, 0xe2, 0x9d, 0xc0, 0x7e, 0x49, 0xf9, 0xca, 0x85,
+	0x75, 0xa0, 0x29, 0x00, 0x9d, 0x32, 0xf3, 0x34, 0x29, 0xcb, 0xfb, 0x6d, 0xc3, 0x9e, 0xd8, 0x79,
+	0xae, 0xca, 0xff, 0x23, 0xbf, 0x66, 0x46, 0xbd, 0x8a, 0x19, 0x8d, 0x15, 0xcc, 0x68, 0x5e, 0xca,
+	0x8c, 0xd6, 0xe5, 0xcc, 0x58, 0x5b, 0xc5, 0x8c, 0xf6, 0x22, 0x33, 0x66, 0xd2, 0x02, 0x59, 0xb7,
+	0x20, 0x2d, 0x47, 0x4d, 0xa1, 0x2c, 0x51, 0x87, 0x66, 0x11, 0xc9, 0x9e, 0x5c, 0xe0, 0x75, 0x55,
+	0x47, 0x9b, 0xde, 0x27, 0xc0, 0xc5, 0x05, 0x54, 0xee, 0xf1, 0x08, 0x9c, 0x39, 0x09, 0x8c, 0xf6,
+	0x0a, 0x44, 0xc9, 0xe7, 0xf4, 0x7f, 0x5a, 0xb0, 0xa9, 0x85, 0xf9, 0x4e, 0xfd, 0xef, 0xd0, 0x33,
+	0xd8, 0x58, 0x78, 0xb1, 0x11, 0x16, 0x15, 0xca, 0xfe, 0x0a, 0xee, 0x7e, 0x49, 0x44, 0x77, 0xf7,
+	0x18, 0x9c, 0xdc, 0x23, 0x8c, 0x3a, 0x22, 0xb3, 0xf8, 0x9a, 0xbb, 0x7b, 0x05, 0xbf, 0x3e, 0x7f,
+	0x0c, 0xeb, 0xf9, 0xe7, 0x06, 0xc9, 0xc4, 0x92, 0x57, 0xd8, 0xc5, 0xc5, 0x80, 0x2a, 0xd1, 0xff,
+	0x6e, 0x01, 0xca, 0x0d, 0x6e, 0xe6, 0x7b, 0x03, 0x57, 0x0b, 0xe2, 0x40, 0x07, 0xf3, 0x49, 0x8a,
+	0x92, 0x74, 0xaf, 0x57, 0x44, 0x75, 0xaf, 0x2f, 0x61, 0x6b, 0x79, 0x4b, 0xe8, 0x9a, 0x69, 0xab,
+	0x44, 0x3c, 0xee, 0x41, 0x79, 0x50, 0x95, 0x3b, 0x6b, 0x4a, 0x11, 0xdc, 0xff, 0x13, 0x00, 0x00,
+	0xff, 0xff, 0x93, 0xb9, 0x7e, 0x88, 0x8a, 0x08, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -614,6 +990,103 @@ var _UserLogService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FindUserLogs",
 			Handler:    _UserLogService_FindUserLogs_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "logging-service.proto",
+}
+
+// ExchangeLogServiceClient is the client API for ExchangeLogService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type ExchangeLogServiceClient interface {
+	CreateExchangeLog(ctx context.Context, in *CreateExchangeLogRequest, opts ...grpc.CallOption) (*CreateExchangeLogResponse, error)
+	FindExchangeLogs(ctx context.Context, in *FindExchangeLogsRequest, opts ...grpc.CallOption) (*FindExchangeLogsResponse, error)
+}
+
+type exchangeLogServiceClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewExchangeLogServiceClient(cc *grpc.ClientConn) ExchangeLogServiceClient {
+	return &exchangeLogServiceClient{cc}
+}
+
+func (c *exchangeLogServiceClient) CreateExchangeLog(ctx context.Context, in *CreateExchangeLogRequest, opts ...grpc.CallOption) (*CreateExchangeLogResponse, error) {
+	out := new(CreateExchangeLogResponse)
+	err := c.cc.Invoke(ctx, "/v1.ExchangeLogService/CreateExchangeLog", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeLogServiceClient) FindExchangeLogs(ctx context.Context, in *FindExchangeLogsRequest, opts ...grpc.CallOption) (*FindExchangeLogsResponse, error) {
+	out := new(FindExchangeLogsResponse)
+	err := c.cc.Invoke(ctx, "/v1.ExchangeLogService/FindExchangeLogs", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ExchangeLogServiceServer is the server API for ExchangeLogService service.
+type ExchangeLogServiceServer interface {
+	CreateExchangeLog(context.Context, *CreateExchangeLogRequest) (*CreateExchangeLogResponse, error)
+	FindExchangeLogs(context.Context, *FindExchangeLogsRequest) (*FindExchangeLogsResponse, error)
+}
+
+func RegisterExchangeLogServiceServer(s *grpc.Server, srv ExchangeLogServiceServer) {
+	s.RegisterService(&_ExchangeLogService_serviceDesc, srv)
+}
+
+func _ExchangeLogService_CreateExchangeLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateExchangeLogRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeLogServiceServer).CreateExchangeLog(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.ExchangeLogService/CreateExchangeLog",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeLogServiceServer).CreateExchangeLog(ctx, req.(*CreateExchangeLogRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExchangeLogService_FindExchangeLogs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FindExchangeLogsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeLogServiceServer).FindExchangeLogs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.ExchangeLogService/FindExchangeLogs",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeLogServiceServer).FindExchangeLogs(ctx, req.(*FindExchangeLogsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _ExchangeLogService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.ExchangeLogService",
+	HandlerType: (*ExchangeLogServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateExchangeLog",
+			Handler:    _ExchangeLogService_CreateExchangeLog_Handler,
+		},
+		{
+			MethodName: "FindExchangeLogs",
+			Handler:    _ExchangeLogService_FindExchangeLogs_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

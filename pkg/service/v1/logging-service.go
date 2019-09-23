@@ -59,11 +59,13 @@ func (s *loggingServiceServer) CreateUserLog(ctx context.Context, req *v1.Create
 	}
 
 	var id int64
+
 	err = c.QueryRowContext(ctx, "INSERT INTO user_logs (user_id, declaration_id, type, message, created_at)"+
 		" VALUES ($1, $2, $3, $4, $5) RETURNING id",
 		req.UserLog.UserId, req.UserLog.DeclarationId, req.UserLog.Type, req.UserLog.UserId, createdAt).Scan(&id)
 	if err != nil {
 		log.Println("Service<<CreateUserLog>>. Error: " + err.Error())
+		log.Println(err)
 		return nil, status.Error(codes.Unknown, "failed to insert-> "+err.Error())
 	}
 

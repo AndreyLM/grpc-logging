@@ -3,6 +3,9 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
+option php_namespace = "nazk\\logs\\v1";
+option php_metadata_namespace = "nazk\\logs\\v1";
+
 // ---------------------- << USER LOGS >>
 message UserLog {
     int64 id = 1;
@@ -45,7 +48,7 @@ message FindUserLogsRequest {
     int64 declarationId = 5;
     string type = 6;
     int32 limit = 7;
-    int32 offset = 8;    
+    int32 offset = 8;
 }
 
 message FindUserLogsResponse {
@@ -53,10 +56,56 @@ message FindUserLogsResponse {
     repeated UserLog userLogs = 2;
 }
 
-// Services
+// Service
 service UserLogService {
     rpc CreateUserLog(CreateUserLogRequest) returns (CreateUserLogResponse);
     rpc ReadUserLog(ReadUserLogRequest) returns (ReadUserLogResponse);
     rpc FindUserLogs(FindUserLogsRequest) returns (FindUserLogsResponse);
 }
 
+// EXCHANGES 
+message ExchangeLog {
+    int64 typeId = 1;
+    int64 stateId = 2;
+    int64 requestId = 3;
+    int64 declarationId = 4;
+    string registerId = 5;
+    string content = 6;
+    google.protobuf.Timestamp createdAt = 7;  
+}
+
+message CreateExchangeLogRequest {
+    string api = 1;
+    ExchangeLog exchageLog = 2;
+}
+
+message CreateExchangeLogResponse {
+    string api = 1;
+    int64 status = 2;
+}
+
+message FindExchangeLogsRequest {
+    string api = 1;
+    google.protobuf.Timestamp from = 2;
+    google.protobuf.Timestamp to = 3;
+    int64 typeId = 4;
+    int64 stateId = 5;
+    int64 requestId = 6;
+    int64 declarationId = 7;
+    string registerId = 8;
+    string content = 9;
+    int64 limit = 10;
+    int64 offset = 11;
+    string orderBy = 12;    
+}
+
+message FindExchangeLogsResponse {
+    string api = 1;
+    repeated ExchangeLog exchageLogs = 2;
+}
+
+// Service
+service ExchangeLogService {
+    rpc CreateExchangeLog(CreateExchangeLogRequest) returns (CreateExchangeLogResponse);
+    rpc FindExchangeLogs(FindExchangeLogsRequest) returns (FindExchangeLogsResponse);
+}

@@ -6,7 +6,6 @@ import (
 	// "log"
 	"context"
 	"database/sql"
-	"flag"
 	"fmt"
 	"log"
 
@@ -17,33 +16,10 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// Config - configuration for Server
-type Config struct {
-	GRPCPort   string
-	DBHost     string
-	DBPort     string
-	DBUser     string
-	DBPassword string
-	DBSchema   string
-}
-
 // RunServer - runs server
-func RunServer() error {
+func RunServer(cfg *Config) error {
 	log.Println("Running server...")
 	ctx := context.Background()
-	var cfg Config
-	flag.StringVar(&cfg.GRPCPort, "grpc-port", "", "gRPC port to bind")
-	flag.StringVar(&cfg.DBHost, "db-host", "", "DB host")
-	flag.StringVar(&cfg.DBPort, "db-port", "", "DB port")
-	flag.StringVar(&cfg.DBUser, "db-user", "", "DB user")
-	flag.StringVar(&cfg.DBPassword, "db-password", "", "DB password")
-	flag.StringVar(&cfg.DBSchema, "db-schema", "", "DB schema")
-
-	flag.Parse()
-
-	if len(cfg.GRPCPort) == 0 {
-		return fmt.Errorf("invalid TCP port for gRPC server: '%s'", cfg.GRPCPort)
-	}
 
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		cfg.DBHost,
@@ -52,7 +28,7 @@ func RunServer() error {
 		cfg.DBPassword,
 		cfg.DBSchema,
 	)
-
+	log.Println(dsn)
 	db, err := sql.Open("postgres", dsn)
 	db.SetMaxOpenConns(20)
 	db.SetMaxIdleConns(5)
@@ -63,10 +39,12 @@ func RunServer() error {
 
 	err = db.Ping()
 	if err != nil {
+		log.Println(err)
 		panic(err)
 	}
 
-	v1API := v1.NewLoggingService(db)
+	v1APIUserLoggin := v1.NewLoggingService(db)
+	v1APIExchangeLoggin := v1.NewExchangeLoggingService(db)
 
-	return grpc.RunServer(ctx, v1API, cfg.GRPCPort)
+	return grpc.RunServer(ctx, v1APIUserLoggin, v1APIExchangeLoggin, cfg.GRPCPort)
 }
