@@ -1,7 +1,0 @@
-2019/06/18 14:41:39 Service<<CreateUserLog>> Duration:  1.409594ms
-2019/06/18 14:41:39 Proxy<<CreateUserLog>>. Duration:  1.844677ms
-2019/06/18 14:41:39 Service<<ReadUserLog>> Duration:  530.769µs
-2019/06/18 14:41:39 Proxy<<ReadUserLog>>. Duration:  767.027µs
-2019/06/18 14:41:39 2019-06-18 14:41:39.168907868 +0300 EEST m=+94.290812957
-2019/06/18 14:41:39 Service<<FindUserLogs>>. Duration: 594.701µs
-2019/06/18 14:41:39 Proxy<<FindUserLogs>>. Duration:  892.54µs

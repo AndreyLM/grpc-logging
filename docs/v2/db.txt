@@ -1,0 +1,36 @@
+CREATE TABLE users (
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  user_id     BIGINT NULL,
+  type_id     INT NOT NULL,
+  content     TEXT NOT NULL
+);
+
+SELECT create_hypertable('users', 'created_at');
+
+
+CREATE TABLE rules (
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  rule_id     BIGINT NOT NULL,
+  created_by  BIGINT NOT NULL,
+  content     TEXT NOT NULL,
+  rule_number INT NULL
+);
+
+SELECT create_hypertable('rules', 'created_at');
+
+CREATE TABLE exchanges (
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  type_id INT NOT NULL,
+  state_id INT NOT NULL,
+  request_id BIGINT NOT NULL,
+  declartaion_id BIGINT NULL,
+  register_id VARCHAR(4) NOT NULL,
+  content TEXT NOT NULL
+);
+
+SELECT create_hypertable('exchanges', 'created_at');
+    
+
+\c "database name" - connect to db;
+\db - show tables;
+\d "table name" - show table schema

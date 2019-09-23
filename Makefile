@@ -1,11 +1,10 @@
 generate-proto:
-	protoc --proto_path=api/proto/v1 --proto_path=third_party --go_out=plugins=grpc:pkg/api/v1 logging-service.proto \
-	--php_out=plugins=grpc:pkg/api/v1/php
+	protoc --proto_path=api/proto/v2 --proto_path=third_party --go_out=plugins=grpc:pkg/api/v2 logging-service.proto 
 
 generate-proto-php:
-	protoc --proto_path=api/proto/v1 --proto_path=third_party \
-	--php_out=pkg/api/v1/php \
-	--grpc_out=pkg/api/v1/php \
+	protoc --proto_path=api/proto/v2 --proto_path=third_party \
+	--php_out=pkg/api/v2/php \
+	--grpc_out=pkg/api/v2/php \
 	--plugin=protoc-gen-grpc=/home/andrew/programs/grpc/bins/opt/grpc_php_plugin \
 	logging-service.proto
 
