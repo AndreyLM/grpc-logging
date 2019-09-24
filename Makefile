@@ -14,19 +14,24 @@ DBUSER=admin
 DBPASSWORD=admin_1234
 DBSCHEMA=logdb
 GRPCPORT=9090
-LOGPATH=./logs/log.txt
+LOGPATH=./logs/server/log.txt
+LOGPATHPROXY=./logs/proxy/log.txt
 GRPCARGS= -log-path=${LOGPATH} -grpc-port=${GRPCPORT} -db-host=${DBHOST} -db-port=${DBPORT} -db-schema=${DBSCHEMA} -db-user=${DBUSER} -db-password=${DBPASSWORD}
 run-server:
-	# ./cmd/server/service ${GRPCARGS}
 	go run ./cmd/v2/server/main.go ${GRPCARGS}
 
 GRPC_PROXY_PORT=9091
-GRPC_ADRESS=localhost:${GRPCPORT}
+GRPC_ADDRESS=localhost:${GRPCPORT}
+
 run-proxy:
-	go run ./cmd/proxy-server/main.go -grpc-proxy-port=${GRPC_PROXY_PORT} -grpc-server-address=${GRPC_ADRESS}
+	go run ./cmd/v2/proxy/main.go -log-path=${LOGPATHPROXY} -grpc-proxy-port=${GRPC_PROXY_PORT} -grpc-server-address=${GRPC_ADDRESS}
 
 run-client:
 	go run ./cmd/client/main.go -server=localhost:${GRPC_PROXY_PORT}
 
 run-client-add-data:
 	go run ./cmd/client-add-data/main.go -server=localhost:${GRPC_PROXY_PORT}
+
+build:
+	go build -o ./bin/v2/service ./cmd/v2/server/main.go
+	go build -o ./bin/v2/proxy ./cmd/v2/proxy/main.go
