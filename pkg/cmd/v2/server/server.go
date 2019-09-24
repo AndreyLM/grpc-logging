@@ -9,6 +9,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/andreylm/grpc-logging/pkg/protocol/grpc/v2"
 	v2 "github.com/andreylm/grpc-logging/pkg/service/v2"
@@ -29,17 +30,27 @@ type Config struct {
 
 // RunServer - runs server
 func RunServer() error {
-	log.Println("Running server...")
-	ctx := context.Background()
+	var logPath string
 	var cfg Config
+
+	flag.StringVar(&logPath, "log-path", "log.txt", "DB schema")
 	flag.StringVar(&cfg.GRPCPort, "grpc-port", "", "gRPC port to bind")
 	flag.StringVar(&cfg.DBHost, "db-host", "", "DB host")
 	flag.StringVar(&cfg.DBPort, "db-port", "", "DB port")
 	flag.StringVar(&cfg.DBUser, "db-user", "", "DB user")
 	flag.StringVar(&cfg.DBPassword, "db-password", "", "DB password")
 	flag.StringVar(&cfg.DBSchema, "db-schema", "", "DB schema")
-
 	flag.Parse()
+
+	logFile, err := os.OpenFile(logPath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		panic(err)
+	}
+	log.SetOutput(logFile)
+
+	ctx := context.Background()
+
+	log.Println("Running server...")
 
 	if len(cfg.GRPCPort) == 0 {
 		return fmt.Errorf("invalid TCP port for gRPC server: '%s'", cfg.GRPCPort)

@@ -1,8 +1,0 @@
-EXCHANGE LOG
-    type_id INT NOT NULL,
-    state_id INT NOT NULL,
-    request_id BIGINT NOT NULL,
-    declartaion_id BIGINT NULL,
-    register_id VARCHAR(4) NOT NULL,
-    content TEXT NOT NULL,
-    created_at TIMESTAMP NULL DEFAULT NOW(),

@@ -14,10 +14,11 @@ DBUSER=admin
 DBPASSWORD=admin_1234
 DBSCHEMA=logdb
 GRPCPORT=9090
-GRPCARGS= -grpc-port=${GRPCPORT} -db-host=${DBHOST} -db-port=${DBPORT} -db-schema=${DBSCHEMA} -db-user=${DBUSER} -db-password=${DBPASSWORD}
+LOGPATH=./logs/log.txt
+GRPCARGS= -log-path=${LOGPATH} -grpc-port=${GRPCPORT} -db-host=${DBHOST} -db-port=${DBPORT} -db-schema=${DBSCHEMA} -db-user=${DBUSER} -db-password=${DBPASSWORD}
 run-server:
 	# ./cmd/server/service ${GRPCARGS}
-	go run ./cmd/server/main.go ${GRPCARGS}
+	go run ./cmd/v2/server/main.go ${GRPCARGS}
 
 GRPC_PROXY_PORT=9091
 GRPC_ADRESS=localhost:${GRPCPORT}

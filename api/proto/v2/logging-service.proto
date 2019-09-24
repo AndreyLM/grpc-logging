@@ -3,8 +3,8 @@ package v2;
 
 import "google/protobuf/timestamp.proto";
 
-option php_namespace = "nazk\\logs";
-option php_metadata_namespace = "nazk\\logs\\metadata";
+option php_namespace = "nazk\\logs\\v2";
+option php_metadata_namespace = "nazk\\logs\\v2\\metadata";
 
 //_________________________________________________________________________________________
 //
@@ -14,7 +14,7 @@ option php_metadata_namespace = "nazk\\logs\\metadata";
 message User {
     google.protobuf.Timestamp createdAt = 1;  
     int64 userId = 2;
-    string type = 3;
+    int64 typeId = 3;
     string content = 4;
 }
 
@@ -35,7 +35,7 @@ message FindUsersRequest {
     google.protobuf.Timestamp createdAtFrom = 2;
     google.protobuf.Timestamp createdAtTo = 3;
     int64 userId = 4;
-    string type = 5;
+    int64 typeId = 5;
     string content = 6;
     int32 limit = 7;
     int32 offset = 8;
@@ -47,28 +47,11 @@ message FindUsersResponse {
     repeated User users = 2;
 }
 
-// DELETE
-message DeleteUsersRequest {
-    string api = 1;
-    google.protobuf.Timestamp createdAtFrom = 2;
-    google.protobuf.Timestamp createdAtTo = 3;
-    int64 userId = 4;
-    string type = 5;
-}
-
-message DeleteUsersResponse {
-    string api = 1;
-    int64 count = 2;  
-}
-
 // SERVICES
 service UserService {
     rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
     rpc FindUsers(FindUsersRequest) returns (FindUsersResponse);
-    rpc DeleteUsers(DeleteUsersRequest) returns (DeleteUsersResponse);
 }
-
-
 
 
 //_________________________________________________________________________________________
@@ -114,29 +97,11 @@ message FindRulesResponse {
     repeated Rule rules = 2;
 }
 
-// DELETE
-message DeleteRulesRequest {
-    string api = 1;
-    google.protobuf.Timestamp createdAtFrom = 2;
-    google.protobuf.Timestamp createdAtTo = 3;
-    int64 ruleId = 4;
-    int64 createdBy = 5;
-    int64 ruleNumber = 6;
-}
-
-message DeleteRulesResponse {
-    string api = 1;
-    int64 count = 2;  
-}
-
 // SERVICES
 service RuleService {
     rpc CreateRule(CreateRuleRequest) returns (CreateRuleResponse);
     rpc FindRules(FindRulesRequest) returns (FindRulesResponse);
-    rpc DeleteRules(DeleteRulesRequest) returns (DeleteRulesResponse);
 }
-
-
 
 
 //_________________________________________________________________________________________
@@ -187,41 +152,20 @@ message FindExchangesResponse {
     repeated Exchange exchanges = 2;
 }
 
-// DELETE
-message DeleteExchangesRequest {
-    string api = 1;
-    google.protobuf.Timestamp createdAtFrom = 2;
-    google.protobuf.Timestamp createdAtTo = 3;
-    int32 typeId = 4;
-    int32 stateId = 5;
-    int64 requestId = 6;
-    int64 declarationId = 7;
-    string registerId = 8;
-}
-
-message DeleteExchangesResponse {
-    string api = 1;
-    int64 count = 2;  
-}
-
 // SERVICES
 service ExchangeService {
     rpc CreateExchange(CreateExchangeRequest) returns (CreateExchangeResponse);
     rpc FindExchanges(FindExchangesRequest) returns (FindExchangesResponse);
-    rpc DeleteExchanges(DeleteExchangesRequest) returns (DeleteExchangesResponse);
 }
 
 // ALL IN ONE SERVICE
 service LogginService {
     rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
     rpc FindUsers(FindUsersRequest) returns (FindUsersResponse);
-    rpc DeleteUsers(DeleteUsersRequest) returns (DeleteUsersResponse);
 
     rpc CreateRule(CreateRuleRequest) returns (CreateRuleResponse);
     rpc FindRules(FindRulesRequest) returns (FindRulesResponse);
-    rpc DeleteRules(DeleteRulesRequest) returns (DeleteRulesResponse);
     
     rpc CreateExchange(CreateExchangeRequest) returns (CreateExchangeResponse);
     rpc FindExchanges(FindExchangesRequest) returns (FindExchangesResponse);
-    rpc DeleteExchanges(DeleteExchangesRequest) returns (DeleteExchangesResponse);
 }

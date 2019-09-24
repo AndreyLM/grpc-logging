@@ -26,7 +26,7 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 type User struct {
 	CreatedAt            *timestamp.Timestamp `protobuf:"bytes,1,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
 	UserId               int64                `protobuf:"varint,2,opt,name=userId,proto3" json:"userId,omitempty"`
-	Type                 string               `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
+	TypeId               int64                `protobuf:"varint,3,opt,name=typeId,proto3" json:"typeId,omitempty"`
 	Content              string               `protobuf:"bytes,4,opt,name=content,proto3" json:"content,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
@@ -72,11 +72,11 @@ func (m *User) GetUserId() int64 {
 	return 0
 }
 
-func (m *User) GetType() string {
+func (m *User) GetTypeId() int64 {
 	if m != nil {
-		return m.Type
+		return m.TypeId
 	}
-	return ""
+	return 0
 }
 
 func (m *User) GetContent() string {
@@ -187,7 +187,7 @@ type FindUsersRequest struct {
 	CreatedAtFrom        *timestamp.Timestamp `protobuf:"bytes,2,opt,name=createdAtFrom,proto3" json:"createdAtFrom,omitempty"`
 	CreatedAtTo          *timestamp.Timestamp `protobuf:"bytes,3,opt,name=createdAtTo,proto3" json:"createdAtTo,omitempty"`
 	UserId               int64                `protobuf:"varint,4,opt,name=userId,proto3" json:"userId,omitempty"`
-	Type                 string               `protobuf:"bytes,5,opt,name=type,proto3" json:"type,omitempty"`
+	TypeId               int64                `protobuf:"varint,5,opt,name=typeId,proto3" json:"typeId,omitempty"`
 	Content              string               `protobuf:"bytes,6,opt,name=content,proto3" json:"content,omitempty"`
 	Limit                int32                `protobuf:"varint,7,opt,name=limit,proto3" json:"limit,omitempty"`
 	Offset               int32                `protobuf:"varint,8,opt,name=offset,proto3" json:"offset,omitempty"`
@@ -250,11 +250,11 @@ func (m *FindUsersRequest) GetUserId() int64 {
 	return 0
 }
 
-func (m *FindUsersRequest) GetType() string {
+func (m *FindUsersRequest) GetTypeId() int64 {
 	if m != nil {
-		return m.Type
+		return m.TypeId
 	}
-	return ""
+	return 0
 }
 
 func (m *FindUsersRequest) GetContent() string {
@@ -332,125 +332,6 @@ func (m *FindUsersResponse) GetUsers() []*User {
 	return nil
 }
 
-// DELETE
-type DeleteUsersRequest struct {
-	Api                  string               `protobuf:"bytes,1,opt,name=api,proto3" json:"api,omitempty"`
-	CreatedAtFrom        *timestamp.Timestamp `protobuf:"bytes,2,opt,name=createdAtFrom,proto3" json:"createdAtFrom,omitempty"`
-	CreatedAtTo          *timestamp.Timestamp `protobuf:"bytes,3,opt,name=createdAtTo,proto3" json:"createdAtTo,omitempty"`
-	UserId               int64                `protobuf:"varint,4,opt,name=userId,proto3" json:"userId,omitempty"`
-	Type                 string               `protobuf:"bytes,5,opt,name=type,proto3" json:"type,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
-}
-
-func (m *DeleteUsersRequest) Reset()         { *m = DeleteUsersRequest{} }
-func (m *DeleteUsersRequest) String() string { return proto.CompactTextString(m) }
-func (*DeleteUsersRequest) ProtoMessage()    {}
-func (*DeleteUsersRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{5}
-}
-
-func (m *DeleteUsersRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_DeleteUsersRequest.Unmarshal(m, b)
-}
-func (m *DeleteUsersRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_DeleteUsersRequest.Marshal(b, m, deterministic)
-}
-func (m *DeleteUsersRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteUsersRequest.Merge(m, src)
-}
-func (m *DeleteUsersRequest) XXX_Size() int {
-	return xxx_messageInfo_DeleteUsersRequest.Size(m)
-}
-func (m *DeleteUsersRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_DeleteUsersRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_DeleteUsersRequest proto.InternalMessageInfo
-
-func (m *DeleteUsersRequest) GetApi() string {
-	if m != nil {
-		return m.Api
-	}
-	return ""
-}
-
-func (m *DeleteUsersRequest) GetCreatedAtFrom() *timestamp.Timestamp {
-	if m != nil {
-		return m.CreatedAtFrom
-	}
-	return nil
-}
-
-func (m *DeleteUsersRequest) GetCreatedAtTo() *timestamp.Timestamp {
-	if m != nil {
-		return m.CreatedAtTo
-	}
-	return nil
-}
-
-func (m *DeleteUsersRequest) GetUserId() int64 {
-	if m != nil {
-		return m.UserId
-	}
-	return 0
-}
-
-func (m *DeleteUsersRequest) GetType() string {
-	if m != nil {
-		return m.Type
-	}
-	return ""
-}
-
-type DeleteUsersResponse struct {
-	Api                  string   `protobuf:"bytes,1,opt,name=api,proto3" json:"api,omitempty"`
-	Count                int64    `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *DeleteUsersResponse) Reset()         { *m = DeleteUsersResponse{} }
-func (m *DeleteUsersResponse) String() string { return proto.CompactTextString(m) }
-func (*DeleteUsersResponse) ProtoMessage()    {}
-func (*DeleteUsersResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{6}
-}
-
-func (m *DeleteUsersResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_DeleteUsersResponse.Unmarshal(m, b)
-}
-func (m *DeleteUsersResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_DeleteUsersResponse.Marshal(b, m, deterministic)
-}
-func (m *DeleteUsersResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteUsersResponse.Merge(m, src)
-}
-func (m *DeleteUsersResponse) XXX_Size() int {
-	return xxx_messageInfo_DeleteUsersResponse.Size(m)
-}
-func (m *DeleteUsersResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_DeleteUsersResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_DeleteUsersResponse proto.InternalMessageInfo
-
-func (m *DeleteUsersResponse) GetApi() string {
-	if m != nil {
-		return m.Api
-	}
-	return ""
-}
-
-func (m *DeleteUsersResponse) GetCount() int64 {
-	if m != nil {
-		return m.Count
-	}
-	return 0
-}
-
 type Rule struct {
 	CreatedAt            *timestamp.Timestamp `protobuf:"bytes,1,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
 	RuleId               int64                `protobuf:"varint,2,opt,name=ruleId,proto3" json:"ruleId,omitempty"`
@@ -466,7 +347,7 @@ func (m *Rule) Reset()         { *m = Rule{} }
 func (m *Rule) String() string { return proto.CompactTextString(m) }
 func (*Rule) ProtoMessage()    {}
 func (*Rule) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{7}
+	return fileDescriptor_1fb7a78083aef92b, []int{5}
 }
 
 func (m *Rule) XXX_Unmarshal(b []byte) error {
@@ -535,7 +416,7 @@ func (m *CreateRuleRequest) Reset()         { *m = CreateRuleRequest{} }
 func (m *CreateRuleRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateRuleRequest) ProtoMessage()    {}
 func (*CreateRuleRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{8}
+	return fileDescriptor_1fb7a78083aef92b, []int{6}
 }
 
 func (m *CreateRuleRequest) XXX_Unmarshal(b []byte) error {
@@ -582,7 +463,7 @@ func (m *CreateRuleResponse) Reset()         { *m = CreateRuleResponse{} }
 func (m *CreateRuleResponse) String() string { return proto.CompactTextString(m) }
 func (*CreateRuleResponse) ProtoMessage()    {}
 func (*CreateRuleResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{9}
+	return fileDescriptor_1fb7a78083aef92b, []int{7}
 }
 
 func (m *CreateRuleResponse) XXX_Unmarshal(b []byte) error {
@@ -638,7 +519,7 @@ func (m *FindRulesRequest) Reset()         { *m = FindRulesRequest{} }
 func (m *FindRulesRequest) String() string { return proto.CompactTextString(m) }
 func (*FindRulesRequest) ProtoMessage()    {}
 func (*FindRulesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{10}
+	return fileDescriptor_1fb7a78083aef92b, []int{8}
 }
 
 func (m *FindRulesRequest) XXX_Unmarshal(b []byte) error {
@@ -741,7 +622,7 @@ func (m *FindRulesResponse) Reset()         { *m = FindRulesResponse{} }
 func (m *FindRulesResponse) String() string { return proto.CompactTextString(m) }
 func (*FindRulesResponse) ProtoMessage()    {}
 func (*FindRulesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{11}
+	return fileDescriptor_1fb7a78083aef92b, []int{9}
 }
 
 func (m *FindRulesResponse) XXX_Unmarshal(b []byte) error {
@@ -776,133 +657,6 @@ func (m *FindRulesResponse) GetRules() []*Rule {
 	return nil
 }
 
-// DELETE
-type DeleteRulesRequest struct {
-	Api                  string               `protobuf:"bytes,1,opt,name=api,proto3" json:"api,omitempty"`
-	CreatedAtFrom        *timestamp.Timestamp `protobuf:"bytes,2,opt,name=createdAtFrom,proto3" json:"createdAtFrom,omitempty"`
-	CreatedAtTo          *timestamp.Timestamp `protobuf:"bytes,3,opt,name=createdAtTo,proto3" json:"createdAtTo,omitempty"`
-	RuleId               int64                `protobuf:"varint,4,opt,name=ruleId,proto3" json:"ruleId,omitempty"`
-	CreatedBy            int64                `protobuf:"varint,5,opt,name=createdBy,proto3" json:"createdBy,omitempty"`
-	RuleNumber           int64                `protobuf:"varint,6,opt,name=ruleNumber,proto3" json:"ruleNumber,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
-}
-
-func (m *DeleteRulesRequest) Reset()         { *m = DeleteRulesRequest{} }
-func (m *DeleteRulesRequest) String() string { return proto.CompactTextString(m) }
-func (*DeleteRulesRequest) ProtoMessage()    {}
-func (*DeleteRulesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{12}
-}
-
-func (m *DeleteRulesRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_DeleteRulesRequest.Unmarshal(m, b)
-}
-func (m *DeleteRulesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_DeleteRulesRequest.Marshal(b, m, deterministic)
-}
-func (m *DeleteRulesRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteRulesRequest.Merge(m, src)
-}
-func (m *DeleteRulesRequest) XXX_Size() int {
-	return xxx_messageInfo_DeleteRulesRequest.Size(m)
-}
-func (m *DeleteRulesRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_DeleteRulesRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_DeleteRulesRequest proto.InternalMessageInfo
-
-func (m *DeleteRulesRequest) GetApi() string {
-	if m != nil {
-		return m.Api
-	}
-	return ""
-}
-
-func (m *DeleteRulesRequest) GetCreatedAtFrom() *timestamp.Timestamp {
-	if m != nil {
-		return m.CreatedAtFrom
-	}
-	return nil
-}
-
-func (m *DeleteRulesRequest) GetCreatedAtTo() *timestamp.Timestamp {
-	if m != nil {
-		return m.CreatedAtTo
-	}
-	return nil
-}
-
-func (m *DeleteRulesRequest) GetRuleId() int64 {
-	if m != nil {
-		return m.RuleId
-	}
-	return 0
-}
-
-func (m *DeleteRulesRequest) GetCreatedBy() int64 {
-	if m != nil {
-		return m.CreatedBy
-	}
-	return 0
-}
-
-func (m *DeleteRulesRequest) GetRuleNumber() int64 {
-	if m != nil {
-		return m.RuleNumber
-	}
-	return 0
-}
-
-type DeleteRulesResponse struct {
-	Api                  string   `protobuf:"bytes,1,opt,name=api,proto3" json:"api,omitempty"`
-	Count                int64    `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *DeleteRulesResponse) Reset()         { *m = DeleteRulesResponse{} }
-func (m *DeleteRulesResponse) String() string { return proto.CompactTextString(m) }
-func (*DeleteRulesResponse) ProtoMessage()    {}
-func (*DeleteRulesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{13}
-}
-
-func (m *DeleteRulesResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_DeleteRulesResponse.Unmarshal(m, b)
-}
-func (m *DeleteRulesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_DeleteRulesResponse.Marshal(b, m, deterministic)
-}
-func (m *DeleteRulesResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteRulesResponse.Merge(m, src)
-}
-func (m *DeleteRulesResponse) XXX_Size() int {
-	return xxx_messageInfo_DeleteRulesResponse.Size(m)
-}
-func (m *DeleteRulesResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_DeleteRulesResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_DeleteRulesResponse proto.InternalMessageInfo
-
-func (m *DeleteRulesResponse) GetApi() string {
-	if m != nil {
-		return m.Api
-	}
-	return ""
-}
-
-func (m *DeleteRulesResponse) GetCount() int64 {
-	if m != nil {
-		return m.Count
-	}
-	return 0
-}
-
 type Exchange struct {
 	CreatedAt            *timestamp.Timestamp `protobuf:"bytes,1,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
 	TypeId               int32                `protobuf:"varint,2,opt,name=typeId,proto3" json:"typeId,omitempty"`
@@ -920,7 +674,7 @@ func (m *Exchange) Reset()         { *m = Exchange{} }
 func (m *Exchange) String() string { return proto.CompactTextString(m) }
 func (*Exchange) ProtoMessage()    {}
 func (*Exchange) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{14}
+	return fileDescriptor_1fb7a78083aef92b, []int{10}
 }
 
 func (m *Exchange) XXX_Unmarshal(b []byte) error {
@@ -1003,7 +757,7 @@ func (m *CreateExchangeRequest) Reset()         { *m = CreateExchangeRequest{} }
 func (m *CreateExchangeRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateExchangeRequest) ProtoMessage()    {}
 func (*CreateExchangeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{15}
+	return fileDescriptor_1fb7a78083aef92b, []int{11}
 }
 
 func (m *CreateExchangeRequest) XXX_Unmarshal(b []byte) error {
@@ -1050,7 +804,7 @@ func (m *CreateExchangeResponse) Reset()         { *m = CreateExchangeResponse{}
 func (m *CreateExchangeResponse) String() string { return proto.CompactTextString(m) }
 func (*CreateExchangeResponse) ProtoMessage()    {}
 func (*CreateExchangeResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{16}
+	return fileDescriptor_1fb7a78083aef92b, []int{12}
 }
 
 func (m *CreateExchangeResponse) XXX_Unmarshal(b []byte) error {
@@ -1108,7 +862,7 @@ func (m *FindExchangesRequest) Reset()         { *m = FindExchangesRequest{} }
 func (m *FindExchangesRequest) String() string { return proto.CompactTextString(m) }
 func (*FindExchangesRequest) ProtoMessage()    {}
 func (*FindExchangesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{17}
+	return fileDescriptor_1fb7a78083aef92b, []int{13}
 }
 
 func (m *FindExchangesRequest) XXX_Unmarshal(b []byte) error {
@@ -1225,7 +979,7 @@ func (m *FindExchangesResponse) Reset()         { *m = FindExchangesResponse{} }
 func (m *FindExchangesResponse) String() string { return proto.CompactTextString(m) }
 func (*FindExchangesResponse) ProtoMessage()    {}
 func (*FindExchangesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{18}
+	return fileDescriptor_1fb7a78083aef92b, []int{14}
 }
 
 func (m *FindExchangesResponse) XXX_Unmarshal(b []byte) error {
@@ -1260,236 +1014,79 @@ func (m *FindExchangesResponse) GetExchanges() []*Exchange {
 	return nil
 }
 
-// DELETE
-type DeleteExchangesRequest struct {
-	Api                  string               `protobuf:"bytes,1,opt,name=api,proto3" json:"api,omitempty"`
-	CreatedAtFrom        *timestamp.Timestamp `protobuf:"bytes,2,opt,name=createdAtFrom,proto3" json:"createdAtFrom,omitempty"`
-	CreatedAtTo          *timestamp.Timestamp `protobuf:"bytes,3,opt,name=createdAtTo,proto3" json:"createdAtTo,omitempty"`
-	TypeId               int32                `protobuf:"varint,4,opt,name=typeId,proto3" json:"typeId,omitempty"`
-	StateId              int32                `protobuf:"varint,5,opt,name=stateId,proto3" json:"stateId,omitempty"`
-	RequestId            int64                `protobuf:"varint,6,opt,name=requestId,proto3" json:"requestId,omitempty"`
-	DeclarationId        int64                `protobuf:"varint,7,opt,name=declarationId,proto3" json:"declarationId,omitempty"`
-	RegisterId           string               `protobuf:"bytes,8,opt,name=registerId,proto3" json:"registerId,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
-}
-
-func (m *DeleteExchangesRequest) Reset()         { *m = DeleteExchangesRequest{} }
-func (m *DeleteExchangesRequest) String() string { return proto.CompactTextString(m) }
-func (*DeleteExchangesRequest) ProtoMessage()    {}
-func (*DeleteExchangesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{19}
-}
-
-func (m *DeleteExchangesRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_DeleteExchangesRequest.Unmarshal(m, b)
-}
-func (m *DeleteExchangesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_DeleteExchangesRequest.Marshal(b, m, deterministic)
-}
-func (m *DeleteExchangesRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteExchangesRequest.Merge(m, src)
-}
-func (m *DeleteExchangesRequest) XXX_Size() int {
-	return xxx_messageInfo_DeleteExchangesRequest.Size(m)
-}
-func (m *DeleteExchangesRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_DeleteExchangesRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_DeleteExchangesRequest proto.InternalMessageInfo
-
-func (m *DeleteExchangesRequest) GetApi() string {
-	if m != nil {
-		return m.Api
-	}
-	return ""
-}
-
-func (m *DeleteExchangesRequest) GetCreatedAtFrom() *timestamp.Timestamp {
-	if m != nil {
-		return m.CreatedAtFrom
-	}
-	return nil
-}
-
-func (m *DeleteExchangesRequest) GetCreatedAtTo() *timestamp.Timestamp {
-	if m != nil {
-		return m.CreatedAtTo
-	}
-	return nil
-}
-
-func (m *DeleteExchangesRequest) GetTypeId() int32 {
-	if m != nil {
-		return m.TypeId
-	}
-	return 0
-}
-
-func (m *DeleteExchangesRequest) GetStateId() int32 {
-	if m != nil {
-		return m.StateId
-	}
-	return 0
-}
-
-func (m *DeleteExchangesRequest) GetRequestId() int64 {
-	if m != nil {
-		return m.RequestId
-	}
-	return 0
-}
-
-func (m *DeleteExchangesRequest) GetDeclarationId() int64 {
-	if m != nil {
-		return m.DeclarationId
-	}
-	return 0
-}
-
-func (m *DeleteExchangesRequest) GetRegisterId() string {
-	if m != nil {
-		return m.RegisterId
-	}
-	return ""
-}
-
-type DeleteExchangesResponse struct {
-	Api                  string   `protobuf:"bytes,1,opt,name=api,proto3" json:"api,omitempty"`
-	Count                int64    `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *DeleteExchangesResponse) Reset()         { *m = DeleteExchangesResponse{} }
-func (m *DeleteExchangesResponse) String() string { return proto.CompactTextString(m) }
-func (*DeleteExchangesResponse) ProtoMessage()    {}
-func (*DeleteExchangesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1fb7a78083aef92b, []int{20}
-}
-
-func (m *DeleteExchangesResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_DeleteExchangesResponse.Unmarshal(m, b)
-}
-func (m *DeleteExchangesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_DeleteExchangesResponse.Marshal(b, m, deterministic)
-}
-func (m *DeleteExchangesResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteExchangesResponse.Merge(m, src)
-}
-func (m *DeleteExchangesResponse) XXX_Size() int {
-	return xxx_messageInfo_DeleteExchangesResponse.Size(m)
-}
-func (m *DeleteExchangesResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_DeleteExchangesResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_DeleteExchangesResponse proto.InternalMessageInfo
-
-func (m *DeleteExchangesResponse) GetApi() string {
-	if m != nil {
-		return m.Api
-	}
-	return ""
-}
-
-func (m *DeleteExchangesResponse) GetCount() int64 {
-	if m != nil {
-		return m.Count
-	}
-	return 0
-}
-
 func init() {
 	proto.RegisterType((*User)(nil), "v2.User")
 	proto.RegisterType((*CreateUserRequest)(nil), "v2.CreateUserRequest")
 	proto.RegisterType((*CreateUserResponse)(nil), "v2.CreateUserResponse")
 	proto.RegisterType((*FindUsersRequest)(nil), "v2.FindUsersRequest")
 	proto.RegisterType((*FindUsersResponse)(nil), "v2.FindUsersResponse")
-	proto.RegisterType((*DeleteUsersRequest)(nil), "v2.DeleteUsersRequest")
-	proto.RegisterType((*DeleteUsersResponse)(nil), "v2.DeleteUsersResponse")
 	proto.RegisterType((*Rule)(nil), "v2.Rule")
 	proto.RegisterType((*CreateRuleRequest)(nil), "v2.CreateRuleRequest")
 	proto.RegisterType((*CreateRuleResponse)(nil), "v2.CreateRuleResponse")
 	proto.RegisterType((*FindRulesRequest)(nil), "v2.FindRulesRequest")
 	proto.RegisterType((*FindRulesResponse)(nil), "v2.FindRulesResponse")
-	proto.RegisterType((*DeleteRulesRequest)(nil), "v2.DeleteRulesRequest")
-	proto.RegisterType((*DeleteRulesResponse)(nil), "v2.DeleteRulesResponse")
 	proto.RegisterType((*Exchange)(nil), "v2.Exchange")
 	proto.RegisterType((*CreateExchangeRequest)(nil), "v2.CreateExchangeRequest")
 	proto.RegisterType((*CreateExchangeResponse)(nil), "v2.CreateExchangeResponse")
 	proto.RegisterType((*FindExchangesRequest)(nil), "v2.FindExchangesRequest")
 	proto.RegisterType((*FindExchangesResponse)(nil), "v2.FindExchangesResponse")
-	proto.RegisterType((*DeleteExchangesRequest)(nil), "v2.DeleteExchangesRequest")
-	proto.RegisterType((*DeleteExchangesResponse)(nil), "v2.DeleteExchangesResponse")
 }
 
 func init() { proto.RegisterFile("logging-service.proto", fileDescriptor_1fb7a78083aef92b) }
 
 var fileDescriptor_1fb7a78083aef92b = []byte{
-	// 931 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x57, 0xbd, 0x6e, 0xc3, 0x54,
-	0x14, 0x96, 0x13, 0x3b, 0x89, 0x4f, 0x1a, 0xda, 0x5e, 0x92, 0xd4, 0x35, 0x55, 0x29, 0x16, 0x43,
-	0x84, 0x44, 0x2a, 0x85, 0xa5, 0x12, 0x50, 0xd1, 0xf4, 0x07, 0x15, 0x21, 0x06, 0xb7, 0xdd, 0xba,
-	0xb8, 0xc9, 0xad, 0xb1, 0x70, 0xec, 0x60, 0x5f, 0x57, 0x94, 0x07, 0xe0, 0x39, 0x78, 0x04, 0xc4,
-	0x13, 0x30, 0x30, 0x31, 0x32, 0x31, 0x30, 0x31, 0x33, 0x32, 0x32, 0xa0, 0xfb, 0xe3, 0xdf, 0xd8,
-	0xae, 0x4a, 0x97, 0xb6, 0xb0, 0xf9, 0x9c, 0x7b, 0xcf, 0xf1, 0x3d, 0xdf, 0x77, 0xbe, 0xe3, 0x6b,
-	0x18, 0xb8, 0xbe, 0x6d, 0x3b, 0x9e, 0xfd, 0x7e, 0x88, 0x83, 0x3b, 0x67, 0x86, 0xc7, 0xcb, 0xc0,
-	0x27, 0x3e, 0x6a, 0xdc, 0x4d, 0xf4, 0xb7, 0x6d, 0xdf, 0xb7, 0x5d, 0xbc, 0xcf, 0x3c, 0x37, 0xd1,
-	0xed, 0x3e, 0x71, 0x16, 0x38, 0x24, 0xd6, 0x62, 0xc9, 0x37, 0x19, 0xdf, 0x49, 0x20, 0x5f, 0x85,
-	0x38, 0x40, 0x07, 0xa0, 0xce, 0x02, 0x6c, 0x11, 0x3c, 0x3f, 0x22, 0x9a, 0xb4, 0x27, 0x8d, 0xba,
-	0x13, 0x7d, 0xcc, 0xa3, 0xc7, 0x71, 0xf4, 0xf8, 0x32, 0x8e, 0x36, 0xd3, 0xcd, 0x68, 0x08, 0xad,
-	0x28, 0xc4, 0xc1, 0xf9, 0x5c, 0x6b, 0xec, 0x49, 0xa3, 0xa6, 0x29, 0x2c, 0x84, 0x40, 0x26, 0xf7,
-	0x4b, 0xac, 0x35, 0xf7, 0xa4, 0x91, 0x6a, 0xb2, 0x67, 0xa4, 0x41, 0x7b, 0xe6, 0x7b, 0x04, 0x7b,
-	0x44, 0x93, 0x99, 0x3b, 0x36, 0x8d, 0x63, 0xd8, 0x3c, 0x66, 0x29, 0xe9, 0x69, 0x4c, 0xfc, 0x75,
-	0x84, 0x43, 0x82, 0x36, 0xa0, 0x69, 0x2d, 0x1d, 0x76, 0x1c, 0xd5, 0xa4, 0x8f, 0x68, 0x07, 0x64,
-	0x9a, 0x9e, 0xbd, 0xaa, 0x3b, 0xe9, 0x8c, 0xef, 0x26, 0x63, 0x16, 0xc0, 0xbc, 0xc6, 0x21, 0xa0,
-	0x6c, 0x92, 0x70, 0xe9, 0x7b, 0x21, 0x2e, 0xc9, 0x32, 0x84, 0x56, 0x48, 0x2c, 0x12, 0x85, 0x2c,
-	0x8f, 0x62, 0x0a, 0xcb, 0xf8, 0xb1, 0x01, 0x1b, 0x67, 0x8e, 0x37, 0xa7, 0xe1, 0x61, 0xf5, 0x21,
-	0x3e, 0x81, 0x5e, 0x52, 0xfe, 0x59, 0xe0, 0x2f, 0xc4, 0x69, 0xea, 0xf0, 0xca, 0x07, 0xa0, 0x8f,
-	0xa0, 0x9b, 0x38, 0x2e, 0x7d, 0x06, 0x51, 0x7d, 0x7c, 0x76, 0x7b, 0x06, 0x71, 0xb9, 0x14, 0x71,
-	0xa5, 0x1c, 0xf1, 0x56, 0x0e, 0x71, 0xd4, 0x07, 0xc5, 0x75, 0x16, 0x0e, 0xd1, 0xda, 0x0c, 0x03,
-	0x6e, 0xd0, 0xdc, 0xfe, 0xed, 0x6d, 0x88, 0x89, 0xd6, 0xe1, 0xd0, 0x70, 0x8b, 0xe6, 0xf1, 0x83,
-	0x39, 0x0e, 0xa6, 0xf7, 0x9a, 0xca, 0xf3, 0x08, 0xd3, 0x38, 0x85, 0xcd, 0x0c, 0x66, 0x95, 0x98,
-	0xef, 0x82, 0x42, 0x8f, 0x49, 0x21, 0x6f, 0xe6, 0xa8, 0xe3, 0x6e, 0xe3, 0x57, 0x09, 0xd0, 0x09,
-	0x76, 0x31, 0x27, 0xef, 0x75, 0xa0, 0x6f, 0x7c, 0x0c, 0x6f, 0xe6, 0x6a, 0xaa, 0x44, 0xa7, 0x0f,
-	0xca, 0xcc, 0x8f, 0x3c, 0x22, 0x34, 0xc4, 0x0d, 0xe3, 0x07, 0x09, 0x64, 0x33, 0x72, 0xf1, 0xd3,
-	0xd4, 0x19, 0x44, 0x2e, 0x4e, 0xd5, 0xc9, 0x2d, 0xb4, 0x93, 0x64, 0x9c, 0xde, 0x33, 0x04, 0x9a,
-	0x66, 0xea, 0x40, 0xbb, 0x00, 0x74, 0xdf, 0x17, 0xd1, 0xe2, 0x06, 0x07, 0xa2, 0xce, 0x8c, 0x27,
-	0xdb, 0x55, 0x4a, 0x85, 0x8e, 0xe9, 0xb9, 0x6b, 0x75, 0x4c, 0xd3, 0x65, 0x75, 0xcc, 0x02, 0x98,
-	0x37, 0xd5, 0x31, 0x4f, 0xf2, 0x68, 0x1d, 0xff, 0x2e, 0x74, 0x4c, 0xc3, 0x9f, 0x77, 0x27, 0x09,
-	0x6e, 0xe4, 0x6a, 0x6e, 0x94, 0x7a, 0x6e, 0x5a, 0x75, 0xdc, 0xb4, 0x2b, 0x14, 0xdf, 0x29, 0x57,
-	0xbc, 0x5a, 0xa5, 0x78, 0x28, 0x55, 0xbc, 0x40, 0xb7, 0x4e, 0xf1, 0xf4, 0x58, 0x39, 0xc5, 0x33,
-	0x42, 0xb9, 0xdb, 0xf8, 0x3b, 0x51, 0xfc, 0x7f, 0x91, 0xa7, 0x74, 0x36, 0x3c, 0x84, 0x63, 0xf9,
-	0x6c, 0xf8, 0x4b, 0x82, 0xce, 0xe9, 0x37, 0xb3, 0x2f, 0x2d, 0xcf, 0x7e, 0xe2, 0x7c, 0xa0, 0x93,
-	0x4a, 0xcc, 0x07, 0xc5, 0x14, 0x16, 0x65, 0x9f, 0x8a, 0x89, 0x2e, 0x34, 0xd9, 0x42, 0x6c, 0xd2,
-	0xaa, 0x03, 0x4e, 0x55, 0x02, 0x48, 0xea, 0x40, 0xef, 0x42, 0x6f, 0x8e, 0x67, 0xae, 0x15, 0x58,
-	0xc4, 0xf1, 0xbd, 0xf3, 0xb9, 0xc0, 0x25, 0xef, 0x64, 0xd8, 0x60, 0xdb, 0x09, 0x09, 0x9b, 0xa3,
-	0xfc, 0xc3, 0x94, 0xf1, 0x54, 0xf7, 0xb0, 0x71, 0x01, 0x03, 0x3e, 0x1a, 0xe2, 0xda, 0xab, 0xdb,
-	0x66, 0x04, 0x1d, 0x2c, 0x36, 0x89, 0x8e, 0x59, 0xa3, 0x2d, 0x98, 0x04, 0x26, 0xab, 0xc6, 0x14,
-	0x86, 0xc5, 0xa4, 0x8f, 0x9e, 0x39, 0xdf, 0x37, 0xa1, 0x4f, 0x55, 0x11, 0xa7, 0x78, 0xde, 0xfd,
-	0x2c, 0x38, 0x97, 0xab, 0x38, 0x57, 0x6a, 0x38, 0x6f, 0x3d, 0xc8, 0x79, 0xfb, 0x61, 0xce, 0x3b,
-	0x75, 0x9c, 0xab, 0x15, 0x73, 0x0b, 0xca, 0xe7, 0x56, 0xb7, 0x6a, 0x6e, 0xad, 0xe5, 0xe7, 0xd6,
-	0x15, 0x0c, 0x0a, 0x0c, 0x55, 0xb2, 0xfc, 0x1e, 0xa8, 0x71, 0x77, 0xc4, 0xf3, 0x2b, 0xdf, 0x3c,
-	0xe9, 0xb2, 0xf1, 0x53, 0x03, 0x86, 0x5c, 0xc9, 0xff, 0x73, 0xff, 0xef, 0xb8, 0x37, 0x8e, 0x60,
-	0x6b, 0x05, 0xc1, 0xc7, 0xcd, 0xc3, 0xc9, 0xcf, 0x12, 0x74, 0xe9, 0x2d, 0xeb, 0x82, 0xff, 0x04,
-	0xa1, 0x0f, 0x01, 0xd2, 0x7f, 0x01, 0x34, 0xa0, 0xe4, 0xad, 0xfc, 0x60, 0xe8, 0xc3, 0xa2, 0x5b,
-	0xbc, 0xf4, 0x00, 0xd4, 0xe4, 0x4e, 0x8b, 0xfa, 0x74, 0x53, 0xf1, 0xb7, 0x40, 0x1f, 0x14, 0xbc,
-	0x22, 0xf2, 0x10, 0xba, 0x99, 0x1b, 0x1f, 0x62, 0x2f, 0x58, 0xbd, 0xd6, 0xea, 0x5b, 0x2b, 0x7e,
-	0x1e, 0xcf, 0xca, 0xa0, 0x1f, 0x84, 0x95, 0x32, 0xd8, 0x3d, 0x30, 0x53, 0x46, 0xe6, 0x7e, 0x95,
-	0x2d, 0x23, 0x77, 0x63, 0x12, 0x65, 0xb0, 0x0f, 0x4c, 0x5a, 0x46, 0xf6, 0x6b, 0x9b, 0x96, 0x91,
-	0xff, 0x0a, 0x25, 0x65, 0xf0, 0xd8, 0x4c, 0x19, 0xb9, 0xe8, 0xad, 0x15, 0xbf, 0x28, 0xe3, 0x4f,
-	0x09, 0xd6, 0x63, 0x2e, 0xe3, 0x52, 0x3e, 0x85, 0x37, 0xf2, 0x53, 0x16, 0x6d, 0xa7, 0xe7, 0x2e,
-	0x8c, 0x73, 0x5d, 0x2f, 0x5b, 0x12, 0x87, 0x3b, 0x81, 0x5e, 0x4e, 0xc7, 0x48, 0x8b, 0x8b, 0x28,
-	0x0a, 0x50, 0xdf, 0x2e, 0x59, 0x11, 0x59, 0x3e, 0x83, 0xf5, 0x42, 0xcf, 0x21, 0x3d, 0x2d, 0x67,
-	0x25, 0xd3, 0x5b, 0xa5, 0x6b, 0xa2, 0xdc, 0xdf, 0x64, 0xe8, 0x7d, 0xce, 0xfe, 0xc2, 0x5f, 0x76,
-	0xfb, 0xbd, 0xd0, 0x76, 0x7b, 0xc5, 0xad, 0x35, 0x7d, 0xe7, 0x97, 0x86, 0xea, 0x59, 0xdf, 0x7e,
-	0x75, 0xed, 0xfa, 0x76, 0xf8, 0x47, 0x03, 0x25, 0xcf, 0xd7, 0x0b, 0x4c, 0xac, 0xb9, 0x45, 0xac,
-	0x9b, 0x16, 0x1b, 0xfa, 0x1f, 0xfc, 0x13, 0x00, 0x00, 0xff, 0xff, 0xc3, 0x3b, 0x29, 0x04, 0x09,
-	0x12, 0x00, 0x00,
+	// 808 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x56, 0x4d, 0x6e, 0xd3, 0x40,
+	0x14, 0x96, 0x93, 0x38, 0x89, 0x5f, 0x1a, 0x68, 0x47, 0x4d, 0xe4, 0x46, 0x55, 0xa9, 0x2c, 0x24,
+	0x22, 0x24, 0x52, 0x29, 0x6c, 0x2a, 0x81, 0x10, 0xa4, 0xb4, 0xa8, 0x12, 0x62, 0xe1, 0xb6, 0xbb,
+	0x6e, 0xdc, 0x78, 0x6a, 0x2c, 0x1c, 0x3b, 0xd8, 0xe3, 0x88, 0xb2, 0x66, 0x85, 0x38, 0x44, 0x8f,
+	0xc0, 0x8a, 0x43, 0x70, 0x06, 0x56, 0x9c, 0x81, 0x03, 0xa0, 0xf9, 0xf1, 0x6f, 0x33, 0xae, 0xaa,
+	0x2e, 0xda, 0x5d, 0xde, 0x9b, 0x79, 0xcf, 0x5f, 0xbe, 0xef, 0x7b, 0x33, 0x03, 0x3d, 0x2f, 0x70,
+	0x1c, 0xd7, 0x77, 0x9e, 0x45, 0x38, 0x5c, 0xb8, 0x53, 0x3c, 0x9a, 0x87, 0x01, 0x09, 0x50, 0x6d,
+	0x31, 0x1e, 0x3c, 0x72, 0x82, 0xc0, 0xf1, 0xf0, 0x0e, 0xcb, 0x9c, 0xc5, 0xe7, 0x3b, 0xc4, 0x9d,
+	0xe1, 0x88, 0x58, 0xb3, 0x39, 0xdf, 0x64, 0x7c, 0x57, 0xa0, 0x71, 0x12, 0xe1, 0x10, 0xed, 0x82,
+	0x36, 0x0d, 0xb1, 0x45, 0xb0, 0xfd, 0x86, 0xe8, 0xca, 0xb6, 0x32, 0xec, 0x8c, 0x07, 0x23, 0x5e,
+	0x3d, 0x4a, 0xaa, 0x47, 0xc7, 0x49, 0xb5, 0x99, 0x6d, 0x46, 0x7d, 0x68, 0xc6, 0x11, 0x0e, 0x0f,
+	0x6d, 0xbd, 0xb6, 0xad, 0x0c, 0xeb, 0xa6, 0x88, 0x68, 0x9e, 0x5c, 0xcc, 0xf1, 0xa1, 0xad, 0xd7,
+	0x79, 0x9e, 0x47, 0x48, 0x87, 0xd6, 0x34, 0xf0, 0x09, 0xf6, 0x89, 0xde, 0xd8, 0x56, 0x86, 0x9a,
+	0x99, 0x84, 0xc6, 0x1e, 0xac, 0xed, 0xb1, 0xb6, 0x14, 0x91, 0x89, 0x3f, 0xc7, 0x38, 0x22, 0x68,
+	0x15, 0xea, 0xd6, 0xdc, 0x65, 0x90, 0x34, 0x93, 0xfe, 0x44, 0x9b, 0xd0, 0xa0, 0x9f, 0x60, 0x9f,
+	0xeb, 0x8c, 0xdb, 0xa3, 0xc5, 0x78, 0xc4, 0x0a, 0x58, 0xd6, 0x78, 0x05, 0x28, 0xdf, 0x24, 0x9a,
+	0x07, 0x7e, 0x84, 0x97, 0x74, 0xe9, 0x43, 0x33, 0x22, 0x16, 0x89, 0x23, 0xd6, 0x47, 0x35, 0x45,
+	0x64, 0xfc, 0xaa, 0xc1, 0xea, 0x81, 0xeb, 0xdb, 0xb4, 0x3c, 0x92, 0x83, 0x78, 0x0d, 0xdd, 0x94,
+	0x82, 0x83, 0x30, 0x98, 0x09, 0x34, 0x55, 0x9c, 0x15, 0x0b, 0xd0, 0x4b, 0xe8, 0xa4, 0x89, 0xe3,
+	0x80, 0x91, 0x54, 0x5d, 0x9f, 0xdf, 0x9e, 0x63, 0xbd, 0x21, 0x61, 0x5d, 0x95, 0xb1, 0xde, 0x2c,
+	0xb0, 0x8e, 0xd6, 0x41, 0xf5, 0xdc, 0x99, 0x4b, 0xf4, 0x16, 0xe3, 0x81, 0x07, 0xb4, 0x4f, 0x70,
+	0x7e, 0x1e, 0x61, 0xa2, 0xb7, 0x39, 0x3d, 0x3c, 0xa2, 0x7d, 0x82, 0xd0, 0xc6, 0xe1, 0xe4, 0x42,
+	0xd7, 0x78, 0x1f, 0x11, 0x1a, 0xfb, 0xb0, 0x96, 0xe3, 0x4d, 0xca, 0xfb, 0x16, 0xa8, 0x14, 0x2a,
+	0xa5, 0xbd, 0x5e, 0x90, 0x8f, 0xa7, 0x8d, 0x9f, 0x0a, 0x34, 0xcc, 0xd8, 0xc3, 0xb7, 0x73, 0x64,
+	0x18, 0x7b, 0x38, 0x73, 0x24, 0x8f, 0xd0, 0x66, 0xda, 0x71, 0x72, 0x21, 0x4c, 0x99, 0x25, 0xd0,
+	0x16, 0x00, 0xdd, 0xf7, 0x21, 0x9e, 0x9d, 0xe1, 0x50, 0xb0, 0x9a, 0xcb, 0xe4, 0x19, 0x54, 0x25,
+	0xbe, 0xa5, 0xb8, 0x2b, 0x7d, 0x4b, 0xdb, 0xe5, 0x7d, 0xcb, 0x0a, 0x58, 0x36, 0xf3, 0x2d, 0x6f,
+	0x72, 0x63, 0xdf, 0xfe, 0x11, 0xbe, 0xa5, 0xe5, 0xf7, 0xdb, 0xb7, 0x42, 0x9b, 0x86, 0x5c, 0x1b,
+	0xb5, 0x5a, 0x9b, 0x66, 0x95, 0x36, 0x2d, 0x89, 0xbb, 0xdb, 0xcb, 0xdd, 0xad, 0xc9, 0xdc, 0x0d,
+	0x4b, 0xdd, 0x2d, 0xd8, 0xad, 0x72, 0x37, 0x85, 0x55, 0x70, 0x37, 0x13, 0x94, 0xa7, 0x8d, 0x7f,
+	0x0a, 0xb4, 0xf7, 0xbf, 0x4c, 0x3f, 0x5a, 0xbe, 0x73, 0x4b, 0x87, 0x8b, 0x29, 0x17, 0x26, 0xc8,
+	0xa6, 0x9c, 0xda, 0x21, 0x39, 0x74, 0x55, 0x33, 0x09, 0x29, 0xbf, 0x21, 0x37, 0x45, 0x4a, 0x7d,
+	0x96, 0x40, 0x8f, 0xa1, 0x6b, 0xe3, 0xa9, 0x67, 0x85, 0x16, 0x71, 0x03, 0x3f, 0x3d, 0x3c, 0x8a,
+	0x49, 0xa6, 0x02, 0x76, 0xdc, 0x88, 0xb0, 0x73, 0x87, 0x1f, 0x23, 0xb9, 0x8c, 0x5c, 0x05, 0xe3,
+	0x08, 0x7a, 0xdc, 0xdc, 0xc9, 0x7f, 0x97, 0x1b, 0x74, 0x08, 0x6d, 0x2c, 0x36, 0x09, 0x6f, 0xae,
+	0x50, 0x12, 0xd3, 0xc2, 0x74, 0xd5, 0x98, 0x40, 0xbf, 0xdc, 0xf4, 0xc6, 0x53, 0x73, 0x59, 0x87,
+	0x75, 0xaa, 0x6b, 0xd2, 0xe2, 0x7e, 0x4f, 0x8e, 0xd0, 0xbc, 0x21, 0xd3, 0x5c, 0xad, 0xd0, 0xbc,
+	0x79, 0xad, 0xe6, 0xad, 0xeb, 0x35, 0x6f, 0x57, 0x69, 0xae, 0x49, 0x26, 0x0f, 0x96, 0x4f, 0x5e,
+	0x47, 0x36, 0x79, 0x2b, 0xc5, 0xc9, 0x3b, 0x81, 0x5e, 0x49, 0x21, 0xa9, 0xca, 0x4f, 0x41, 0x4b,
+	0xdc, 0x91, 0x4c, 0x60, 0xd1, 0x3c, 0xd9, 0xf2, 0xf8, 0x9b, 0x02, 0x1d, 0x7a, 0xef, 0x1c, 0xf1,
+	0x47, 0x13, 0x7a, 0x01, 0x90, 0xbd, 0x1b, 0x50, 0x8f, 0x96, 0x5d, 0x79, 0x8c, 0x0c, 0xfa, 0xe5,
+	0xb4, 0x80, 0xb2, 0x0b, 0x5a, 0x7a, 0xf7, 0xa1, 0x75, 0xba, 0xa9, 0xfc, 0x84, 0x18, 0xf4, 0x4a,
+	0x59, 0x5e, 0xc9, 0x60, 0xd0, 0x03, 0xe2, 0x0a, 0x0c, 0x76, 0x07, 0xe6, 0x60, 0xe4, 0xee, 0x96,
+	0x3c, 0x8c, 0xc2, 0x6d, 0x21, 0x60, 0xb0, 0x43, 0x2a, 0x83, 0x91, 0xbf, 0x11, 0x32, 0x18, 0x85,
+	0x93, 0x6c, 0x7c, 0xa9, 0xc0, 0xc3, 0x84, 0xa5, 0x04, 0xca, 0x3b, 0x78, 0x50, 0x9c, 0x2f, 0xb4,
+	0x91, 0x7d, 0xb7, 0x34, 0xc8, 0x83, 0xc1, 0xb2, 0x25, 0x01, 0xeb, 0x2d, 0x74, 0x0b, 0x0a, 0x22,
+	0x3d, 0x01, 0x51, 0x1e, 0xbb, 0xc1, 0xc6, 0x92, 0x15, 0x01, 0xf1, 0x47, 0x1d, 0xba, 0xef, 0xd9,
+	0x4b, 0xf7, 0x6e, 0x25, 0xbb, 0x23, 0x89, 0xee, 0x99, 0x1c, 0x93, 0x27, 0xbf, 0x6b, 0x2b, 0xbe,
+	0xf5, 0xf5, 0xd3, 0xa9, 0x17, 0x38, 0xd1, 0xe9, 0x62, 0xfc, 0xb7, 0xd6, 0xcb, 0x87, 0xa7, 0x33,
+	0x4c, 0x2c, 0xdb, 0x22, 0xd6, 0x59, 0x93, 0x1d, 0x6c, 0xcf, 0xff, 0x07, 0x00, 0x00, 0xff, 0xff,
+	0x2a, 0xab, 0xc1, 0x57, 0xa7, 0x0c, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1506,7 +1103,6 @@ const _ = grpc.SupportPackageIsVersion4
 type UserServiceClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	FindUsers(ctx context.Context, in *FindUsersRequest, opts ...grpc.CallOption) (*FindUsersResponse, error)
-	DeleteUsers(ctx context.Context, in *DeleteUsersRequest, opts ...grpc.CallOption) (*DeleteUsersResponse, error)
 }
 
 type userServiceClient struct {
@@ -1535,20 +1131,10 @@ func (c *userServiceClient) FindUsers(ctx context.Context, in *FindUsersRequest,
 	return out, nil
 }
 
-func (c *userServiceClient) DeleteUsers(ctx context.Context, in *DeleteUsersRequest, opts ...grpc.CallOption) (*DeleteUsersResponse, error) {
-	out := new(DeleteUsersResponse)
-	err := c.cc.Invoke(ctx, "/v2.UserService/DeleteUsers", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // UserServiceServer is the server API for UserService service.
 type UserServiceServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	FindUsers(context.Context, *FindUsersRequest) (*FindUsersResponse, error)
-	DeleteUsers(context.Context, *DeleteUsersRequest) (*DeleteUsersResponse, error)
 }
 
 func RegisterUserServiceServer(s *grpc.Server, srv UserServiceServer) {
@@ -1591,24 +1177,6 @@ func _UserService_FindUsers_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_DeleteUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteUsersRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServiceServer).DeleteUsers(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v2.UserService/DeleteUsers",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).DeleteUsers(ctx, req.(*DeleteUsersRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var _UserService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "v2.UserService",
 	HandlerType: (*UserServiceServer)(nil),
@@ -1621,10 +1189,6 @@ var _UserService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "FindUsers",
 			Handler:    _UserService_FindUsers_Handler,
 		},
-		{
-			MethodName: "DeleteUsers",
-			Handler:    _UserService_DeleteUsers_Handler,
-		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "logging-service.proto",
@@ -1636,7 +1200,6 @@ var _UserService_serviceDesc = grpc.ServiceDesc{
 type RuleServiceClient interface {
 	CreateRule(ctx context.Context, in *CreateRuleRequest, opts ...grpc.CallOption) (*CreateRuleResponse, error)
 	FindRules(ctx context.Context, in *FindRulesRequest, opts ...grpc.CallOption) (*FindRulesResponse, error)
-	DeleteRules(ctx context.Context, in *DeleteRulesRequest, opts ...grpc.CallOption) (*DeleteRulesResponse, error)
 }
 
 type ruleServiceClient struct {
@@ -1665,20 +1228,10 @@ func (c *ruleServiceClient) FindRules(ctx context.Context, in *FindRulesRequest,
 	return out, nil
 }
 
-func (c *ruleServiceClient) DeleteRules(ctx context.Context, in *DeleteRulesRequest, opts ...grpc.CallOption) (*DeleteRulesResponse, error) {
-	out := new(DeleteRulesResponse)
-	err := c.cc.Invoke(ctx, "/v2.RuleService/DeleteRules", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // RuleServiceServer is the server API for RuleService service.
 type RuleServiceServer interface {
 	CreateRule(context.Context, *CreateRuleRequest) (*CreateRuleResponse, error)
 	FindRules(context.Context, *FindRulesRequest) (*FindRulesResponse, error)
-	DeleteRules(context.Context, *DeleteRulesRequest) (*DeleteRulesResponse, error)
 }
 
 func RegisterRuleServiceServer(s *grpc.Server, srv RuleServiceServer) {
@@ -1721,24 +1274,6 @@ func _RuleService_FindRules_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RuleService_DeleteRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteRulesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RuleServiceServer).DeleteRules(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v2.RuleService/DeleteRules",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RuleServiceServer).DeleteRules(ctx, req.(*DeleteRulesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var _RuleService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "v2.RuleService",
 	HandlerType: (*RuleServiceServer)(nil),
@@ -1751,10 +1286,6 @@ var _RuleService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "FindRules",
 			Handler:    _RuleService_FindRules_Handler,
 		},
-		{
-			MethodName: "DeleteRules",
-			Handler:    _RuleService_DeleteRules_Handler,
-		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "logging-service.proto",
@@ -1766,7 +1297,6 @@ var _RuleService_serviceDesc = grpc.ServiceDesc{
 type ExchangeServiceClient interface {
 	CreateExchange(ctx context.Context, in *CreateExchangeRequest, opts ...grpc.CallOption) (*CreateExchangeResponse, error)
 	FindExchanges(ctx context.Context, in *FindExchangesRequest, opts ...grpc.CallOption) (*FindExchangesResponse, error)
-	DeleteExchanges(ctx context.Context, in *DeleteExchangesRequest, opts ...grpc.CallOption) (*DeleteExchangesResponse, error)
 }
 
 type exchangeServiceClient struct {
@@ -1795,20 +1325,10 @@ func (c *exchangeServiceClient) FindExchanges(ctx context.Context, in *FindExcha
 	return out, nil
 }
 
-func (c *exchangeServiceClient) DeleteExchanges(ctx context.Context, in *DeleteExchangesRequest, opts ...grpc.CallOption) (*DeleteExchangesResponse, error) {
-	out := new(DeleteExchangesResponse)
-	err := c.cc.Invoke(ctx, "/v2.ExchangeService/DeleteExchanges", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // ExchangeServiceServer is the server API for ExchangeService service.
 type ExchangeServiceServer interface {
 	CreateExchange(context.Context, *CreateExchangeRequest) (*CreateExchangeResponse, error)
 	FindExchanges(context.Context, *FindExchangesRequest) (*FindExchangesResponse, error)
-	DeleteExchanges(context.Context, *DeleteExchangesRequest) (*DeleteExchangesResponse, error)
 }
 
 func RegisterExchangeServiceServer(s *grpc.Server, srv ExchangeServiceServer) {
@@ -1851,24 +1371,6 @@ func _ExchangeService_FindExchanges_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExchangeService_DeleteExchanges_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteExchangesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExchangeServiceServer).DeleteExchanges(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v2.ExchangeService/DeleteExchanges",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExchangeServiceServer).DeleteExchanges(ctx, req.(*DeleteExchangesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var _ExchangeService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "v2.ExchangeService",
 	HandlerType: (*ExchangeServiceServer)(nil),
@@ -1881,10 +1383,6 @@ var _ExchangeService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "FindExchanges",
 			Handler:    _ExchangeService_FindExchanges_Handler,
 		},
-		{
-			MethodName: "DeleteExchanges",
-			Handler:    _ExchangeService_DeleteExchanges_Handler,
-		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "logging-service.proto",
@@ -1896,13 +1394,10 @@ var _ExchangeService_serviceDesc = grpc.ServiceDesc{
 type LogginServiceClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	FindUsers(ctx context.Context, in *FindUsersRequest, opts ...grpc.CallOption) (*FindUsersResponse, error)
-	DeleteUsers(ctx context.Context, in *DeleteUsersRequest, opts ...grpc.CallOption) (*DeleteUsersResponse, error)
 	CreateRule(ctx context.Context, in *CreateRuleRequest, opts ...grpc.CallOption) (*CreateRuleResponse, error)
 	FindRules(ctx context.Context, in *FindRulesRequest, opts ...grpc.CallOption) (*FindRulesResponse, error)
-	DeleteRules(ctx context.Context, in *DeleteRulesRequest, opts ...grpc.CallOption) (*DeleteRulesResponse, error)
 	CreateExchange(ctx context.Context, in *CreateExchangeRequest, opts ...grpc.CallOption) (*CreateExchangeResponse, error)
 	FindExchanges(ctx context.Context, in *FindExchangesRequest, opts ...grpc.CallOption) (*FindExchangesResponse, error)
-	DeleteExchanges(ctx context.Context, in *DeleteExchangesRequest, opts ...grpc.CallOption) (*DeleteExchangesResponse, error)
 }
 
 type logginServiceClient struct {
@@ -1931,15 +1426,6 @@ func (c *logginServiceClient) FindUsers(ctx context.Context, in *FindUsersReques
 	return out, nil
 }
 
-func (c *logginServiceClient) DeleteUsers(ctx context.Context, in *DeleteUsersRequest, opts ...grpc.CallOption) (*DeleteUsersResponse, error) {
-	out := new(DeleteUsersResponse)
-	err := c.cc.Invoke(ctx, "/v2.LogginService/DeleteUsers", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *logginServiceClient) CreateRule(ctx context.Context, in *CreateRuleRequest, opts ...grpc.CallOption) (*CreateRuleResponse, error) {
 	out := new(CreateRuleResponse)
 	err := c.cc.Invoke(ctx, "/v2.LogginService/CreateRule", in, out, opts...)
@@ -1952,15 +1438,6 @@ func (c *logginServiceClient) CreateRule(ctx context.Context, in *CreateRuleRequ
 func (c *logginServiceClient) FindRules(ctx context.Context, in *FindRulesRequest, opts ...grpc.CallOption) (*FindRulesResponse, error) {
 	out := new(FindRulesResponse)
 	err := c.cc.Invoke(ctx, "/v2.LogginService/FindRules", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *logginServiceClient) DeleteRules(ctx context.Context, in *DeleteRulesRequest, opts ...grpc.CallOption) (*DeleteRulesResponse, error) {
-	out := new(DeleteRulesResponse)
-	err := c.cc.Invoke(ctx, "/v2.LogginService/DeleteRules", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1985,26 +1462,14 @@ func (c *logginServiceClient) FindExchanges(ctx context.Context, in *FindExchang
 	return out, nil
 }
 
-func (c *logginServiceClient) DeleteExchanges(ctx context.Context, in *DeleteExchangesRequest, opts ...grpc.CallOption) (*DeleteExchangesResponse, error) {
-	out := new(DeleteExchangesResponse)
-	err := c.cc.Invoke(ctx, "/v2.LogginService/DeleteExchanges", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // LogginServiceServer is the server API for LogginService service.
 type LogginServiceServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	FindUsers(context.Context, *FindUsersRequest) (*FindUsersResponse, error)
-	DeleteUsers(context.Context, *DeleteUsersRequest) (*DeleteUsersResponse, error)
 	CreateRule(context.Context, *CreateRuleRequest) (*CreateRuleResponse, error)
 	FindRules(context.Context, *FindRulesRequest) (*FindRulesResponse, error)
-	DeleteRules(context.Context, *DeleteRulesRequest) (*DeleteRulesResponse, error)
 	CreateExchange(context.Context, *CreateExchangeRequest) (*CreateExchangeResponse, error)
 	FindExchanges(context.Context, *FindExchangesRequest) (*FindExchangesResponse, error)
-	DeleteExchanges(context.Context, *DeleteExchangesRequest) (*DeleteExchangesResponse, error)
 }
 
 func RegisterLogginServiceServer(s *grpc.Server, srv LogginServiceServer) {
@@ -2047,24 +1512,6 @@ func _LogginService_FindUsers_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LogginService_DeleteUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteUsersRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LogginServiceServer).DeleteUsers(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v2.LogginService/DeleteUsers",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LogginServiceServer).DeleteUsers(ctx, req.(*DeleteUsersRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _LogginService_CreateRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateRuleRequest)
 	if err := dec(in); err != nil {
@@ -2097,24 +1544,6 @@ func _LogginService_FindRules_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LogginServiceServer).FindRules(ctx, req.(*FindRulesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LogginService_DeleteRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteRulesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LogginServiceServer).DeleteRules(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v2.LogginService/DeleteRules",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LogginServiceServer).DeleteRules(ctx, req.(*DeleteRulesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2155,24 +1584,6 @@ func _LogginService_FindExchanges_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LogginService_DeleteExchanges_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteExchangesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LogginServiceServer).DeleteExchanges(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v2.LogginService/DeleteExchanges",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LogginServiceServer).DeleteExchanges(ctx, req.(*DeleteExchangesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var _LogginService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "v2.LogginService",
 	HandlerType: (*LogginServiceServer)(nil),
@@ -2186,10 +1597,6 @@ var _LogginService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _LogginService_FindUsers_Handler,
 		},
 		{
-			MethodName: "DeleteUsers",
-			Handler:    _LogginService_DeleteUsers_Handler,
-		},
-		{
 			MethodName: "CreateRule",
 			Handler:    _LogginService_CreateRule_Handler,
 		},
@@ -2198,20 +1605,12 @@ var _LogginService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _LogginService_FindRules_Handler,
 		},
 		{
-			MethodName: "DeleteRules",
-			Handler:    _LogginService_DeleteRules_Handler,
-		},
-		{
 			MethodName: "CreateExchange",
 			Handler:    _LogginService_CreateExchange_Handler,
 		},
 		{
 			MethodName: "FindExchanges",
 			Handler:    _LogginService_FindExchanges_Handler,
-		},
-		{
-			MethodName: "DeleteExchanges",
-			Handler:    _LogginService_DeleteExchanges_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -28,16 +28,3 @@ func createQuery(queryTemplate string, model interface{}) (string, error) {
 
 	return data.String(), nil
 }
-
-// FIND QUERIES
-const queryFindUsers = `
-SELECT created_at, user_id, type_id, content FROM users
-WHERE 1=1
-{{- if .Model.CreatedAtFrom }} AND created_at >= '{{ call .MakeTime .Model.CreatedAtFrom }}' {{- end}}	
-{{- if .Model.CreatedAtTo }} AND created_at <= '{{call .MakeTime .Model.CreatedAtTo }}' {{- end}}	
-{{- if .Model.UserId }} AND user_id = {{ .Model.UserId }} {{- end}}	
-{{- if .Model.Type }} AND type = {{.Model.Type}} {{- end}}	
-{{- if .Model.Limit }} LIMIT {{.Model.Limit}} {{- end}}	
-{{- if .Model.Offset }} OFFSET {{.Model.Offset}} {{- end}}		
-{{- if .Model.OrderBy }} ORDER BY {{.Model.OrderBy}} {{- end}}		
-`

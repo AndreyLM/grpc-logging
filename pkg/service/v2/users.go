@@ -39,7 +39,7 @@ func (s *loggingServiceServer) CreateUser(ctx context.Context, req *v2.CreateUse
 
 	_, err = c.ExecContext(ctx, "INSERT INTO users (created_at, user_id, type_id, content)"+
 		" VALUES ($1, $2, $3, $4)",
-		createdAt, req.User.UserId, req.User.Type, req.User.Content)
+		createdAt, req.User.UserId, req.User.TypeId, req.User.Content)
 	if err != nil {
 		log.Println("Service<<CreateUser>>. Error: " + err.Error())
 		return nil, status.Error(codes.Unknown, "failed to insert-> "+err.Error())
@@ -75,7 +75,7 @@ func (s *loggingServiceServer) FindUsers(ctx context.Context, req *v2.FindUsersR
 	rows, err := c.QueryContext(ctx, query)
 	if err != nil {
 		log.Println("Service<<FindUsers>> Error: " + err.Error())
-		return nil, status.Error(codes.Unknown, "failed to select from user_logs-> "+err.Error())
+		return nil, status.Error(codes.Unknown, "failed to select from users-> "+err.Error())
 	}
 	defer rows.Close()
 
@@ -84,7 +84,7 @@ func (s *loggingServiceServer) FindUsers(ctx context.Context, req *v2.FindUsersR
 
 	for rows.Next() {
 		uLog := new(v2.User)
-		if err := rows.Scan(&createdAt, &uLog.UserId, &uLog.Type, &uLog.Content); err != nil {
+		if err := rows.Scan(&createdAt, &uLog.UserId, &uLog.TypeId, &uLog.Content); err != nil {
 			log.Println("Service<<FindUsers>> Error: failed to retrieve field values-> " + err.Error())
 			return nil, status.Error(codes.Unknown, "failed to retrieve field values-> "+err.Error())
 		}
@@ -101,13 +101,9 @@ func (s *loggingServiceServer) FindUsers(ctx context.Context, req *v2.FindUsersR
 		return nil, status.Error(codes.Unknown, "failed to retrieve data-> "+err.Error())
 	}
 
-	log.Println("Service<<FindUserLogs>>. Duration:", time.Since(start))
+	log.Println("Service<<FindUsers>>. Duration:", time.Since(start))
 	return &v2.FindUsersResponse{
 		Api:   apiVersion,
 		Users: list,
 	}, nil
-}
-
-func (s *loggingServiceServer) DeleteUsers(ctx context.Context, req *v2.DeleteUsersRequest) (*v2.DeleteUsersResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "Method not implemented")
 }

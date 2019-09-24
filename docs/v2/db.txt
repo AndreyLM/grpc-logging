@@ -23,14 +23,15 @@ CREATE TABLE exchanges (
   type_id INT NOT NULL,
   state_id INT NOT NULL,
   request_id BIGINT NOT NULL,
-  declartaion_id BIGINT NULL,
+  declaration_id BIGINT NULL,
   register_id VARCHAR(4) NOT NULL,
   content TEXT NOT NULL
 );
 
 SELECT create_hypertable('exchanges', 'created_at');
     
-
+psql -U admin -W   -  connect to DB with user = admin and prompt to enter password
+\l - show databases
 \c "database name" - connect to db;
 \db - show tables;
 \d "table name" - show table schema
