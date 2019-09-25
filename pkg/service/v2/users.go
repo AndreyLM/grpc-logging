@@ -2,27 +2,34 @@ package v2
 
 import (
 	"context"
-	"log"
 	"time"
 
 	v2 "github.com/andreylm/grpc-logging/pkg/api/v2"
+	"github.com/andreylm/grpc-logging/pkg/request"
 
 	"github.com/golang/protobuf/ptypes"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
 func (s *loggingServiceServer) CreateUser(ctx context.Context, req *v2.CreateUserRequest) (*v2.CreateUserResponse, error) {
-	start := time.Now()
-	if err := checkAPI(req.Api); err != nil {
-		log.Println("Service<<CreateUser>>. Error: " + err.Error())
-		return nil, err
-	}
 	var err error
+	requestInfo := request.NewRequestInfo(ctx, serviceName, "CreateUser")
+	requestInfo.LogRequest()
+	defer func() {
+		if err != nil {
+			requestInfo.LogError(err)
+		}
+		requestInfo.LogDuration()
+	}()
+
+	err = checkAPI(req.Api)
+	if err != nil {
+		return nil, requestInfo.WrapError(codes.Unknown, err)
+	}
+
 	c, err := s.connect(ctx)
 	if err != nil {
-		log.Println("Service<<CreateUser>>. Error: " + err.Error())
-		return nil, err
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 	defer c.Close()
 
@@ -32,8 +39,7 @@ func (s *loggingServiceServer) CreateUser(ctx context.Context, req *v2.CreateUse
 	} else {
 		createdAt, err = ptypes.Timestamp(req.User.CreatedAt)
 		if err != nil {
-			log.Println("Service<<CreateUser>>. Error: " + err.Error())
-			return nil, status.Error(codes.InvalidArgument, "createdAt has invalid format-> "+err.Error())
+			return nil, requestInfo.WrapError(codes.Unknown, err)
 		}
 	}
 
@@ -41,11 +47,8 @@ func (s *loggingServiceServer) CreateUser(ctx context.Context, req *v2.CreateUse
 		" VALUES ($1, $2, $3, $4)",
 		createdAt, req.User.UserId, req.User.TypeId, req.User.Content)
 	if err != nil {
-		log.Println("Service<<CreateUser>>. Error: " + err.Error())
-		return nil, status.Error(codes.Unknown, "failed to insert-> "+err.Error())
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
-
-	log.Println("Service<<CreateUser>> Duration: ", time.Since(start))
 
 	return &v2.CreateUserResponse{
 		Api:    apiVersion,
@@ -54,28 +57,35 @@ func (s *loggingServiceServer) CreateUser(ctx context.Context, req *v2.CreateUse
 }
 
 func (s *loggingServiceServer) FindUsers(ctx context.Context, req *v2.FindUsersRequest) (*v2.FindUsersResponse, error) {
-	start := time.Now()
-	if err := checkAPI(req.Api); err != nil {
-		log.Println("Service<<FindUsers>> Error: " + err.Error())
+	var err error
+	requestInfo := request.NewRequestInfo(ctx, serviceName, "FindUsers")
+	requestInfo.LogRequest()
+	defer func() {
+		if err != nil {
+			requestInfo.LogError(err)
+		}
+		requestInfo.LogDuration()
+	}()
+
+	err = checkAPI(req.Api)
+	if err != nil {
 		return nil, err
 	}
+
 	c, err := s.connect(ctx)
 	if err != nil {
-		log.Println("Service<<FindUsers>> Error: " + err.Error())
-		return nil, err
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 	defer c.Close()
 
 	query, err := createQuery(queryFindUsers, req)
 	if err != nil {
-		log.Println("Service<<FindUsers>> Error: " + err.Error())
-		return nil, status.Error(codes.Unknown, "failed to create query-> "+err.Error())
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 
 	rows, err := c.QueryContext(ctx, query)
 	if err != nil {
-		log.Println("Service<<FindUsers>> Error: " + err.Error())
-		return nil, status.Error(codes.Unknown, "failed to select from users-> "+err.Error())
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 	defer rows.Close()
 
@@ -84,24 +94,22 @@ func (s *loggingServiceServer) FindUsers(ctx context.Context, req *v2.FindUsersR
 
 	for rows.Next() {
 		uLog := new(v2.User)
-		if err := rows.Scan(&createdAt, &uLog.UserId, &uLog.TypeId, &uLog.Content); err != nil {
-			log.Println("Service<<FindUsers>> Error: failed to retrieve field values-> " + err.Error())
-			return nil, status.Error(codes.Unknown, "failed to retrieve field values-> "+err.Error())
+		err = rows.Scan(&createdAt, &uLog.UserId, &uLog.TypeId, &uLog.Content)
+		if err != nil {
+			return nil, requestInfo.WrapError(codes.Unknown, err)
 		}
 		uLog.CreatedAt, err = ptypes.TimestampProto(createdAt)
 		if err != nil {
-			log.Println("Service<<FindUsers>> Error: createdAt field has invalid format-> " + err.Error())
-			return nil, status.Error(codes.Unknown, "createdAt field has invalid format-> "+err.Error())
+			return nil, requestInfo.WrapError(codes.Unknown, err)
 		}
 		list = append(list, uLog)
 	}
 
-	if err := rows.Err(); err != nil {
-		log.Println("Service<<FindUsers>> Error: failed to retrieve data-> " + err.Error())
-		return nil, status.Error(codes.Unknown, "failed to retrieve data-> "+err.Error())
+	err = rows.Err()
+	if err != nil {
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 
-	log.Println("Service<<FindUsers>>. Duration:", time.Since(start))
 	return &v2.FindUsersResponse{
 		Api:   apiVersion,
 		Users: list,

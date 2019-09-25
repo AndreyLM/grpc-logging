@@ -6,7 +6,8 @@ import (
 )
 
 const (
-	apiVersion = "v2"
+	apiVersion  = "v2"
+	serviceName = "loggin-service"
 )
 
 func checkAPI(api string) error {

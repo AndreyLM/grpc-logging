@@ -2,23 +2,28 @@ package proxy
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/andreylm/grpc-logging/pkg/request"
 
 	v2 "github.com/andreylm/grpc-logging/pkg/api/v2"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
 func (s *loggingProxyServer) CreateUser(ctx context.Context, req *v2.CreateUserRequest) (*v2.CreateUserResponse, error) {
-	requestInfo := request.NewRequestInfo(ctx, serviceName)
+	var err error
+	requestInfo := request.NewRequestInfo(ctx, serviceName, "CreateUser")
 	requestInfo.LogRequest()
+	defer func() {
+		if err != nil {
+			requestInfo.LogError(err)
+		}
+		requestInfo.LogDuration()
+	}()
 
-	if err := checkAPI(req.Api); err != nil {
-		requestInfo.LogError(err)
-		return nil, err
+	err = checkAPI(req.Api)
+	if err != nil {
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
@@ -26,19 +31,25 @@ func (s *loggingProxyServer) CreateUser(ctx context.Context, req *v2.CreateUserR
 
 	res, err := s.client.CreateUser(ctx, req)
 	if err != nil {
-		requestInfo.LogError(err)
-		return nil, status.Error(codes.Unknown, fmt.Sprintf("<<%s: 'CreateUser'>> Error: %s", requestInfo.GetServiceName(), err))
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 	return res, nil
 }
 
 func (s *loggingProxyServer) FindUsers(ctx context.Context, req *v2.FindUsersRequest) (*v2.FindUsersResponse, error) {
-	requestInfo := request.NewRequestInfo(ctx, serviceName)
+	var err error
+	requestInfo := request.NewRequestInfo(ctx, serviceName, "FindUsers")
 	requestInfo.LogRequest()
+	defer func() {
+		if err != nil {
+			requestInfo.LogError(err)
+		}
+		requestInfo.LogDuration()
+	}()
 
-	if err := checkAPI(req.Api); err != nil {
-		requestInfo.LogError(err)
-		return nil, err
+	err = checkAPI(req.Api)
+	if err != nil {
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
@@ -46,9 +57,7 @@ func (s *loggingProxyServer) FindUsers(ctx context.Context, req *v2.FindUsersReq
 
 	res, err := s.client.FindUsers(ctx, req)
 	if err != nil {
-		requestInfo.LogError(err)
-		return nil, status.Error(codes.Unknown, fmt.Sprintf("<<%s: 'FindUsers'>> Error: %s", requestInfo.GetServiceName(), err))
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
-	requestInfo.LogDuration()
 	return res, nil
 }

@@ -2,26 +2,33 @@ package v2
 
 import (
 	"context"
-	"log"
 	"time"
 
 	v2 "github.com/andreylm/grpc-logging/pkg/api/v2"
+	"github.com/andreylm/grpc-logging/pkg/request"
 	"github.com/golang/protobuf/ptypes"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
 func (s *loggingServiceServer) CreateExchange(ctx context.Context, req *v2.CreateExchangeRequest) (*v2.CreateExchangeResponse, error) {
-	start := time.Now()
-	if err := checkAPI(req.Api); err != nil {
-		log.Println("Service<<CreateExchange>>. Error: " + err.Error())
-		return nil, err
-	}
 	var err error
+	requestInfo := request.NewRequestInfo(ctx, serviceName, "CreateExchange")
+	requestInfo.LogRequest()
+	defer func() {
+		if err != nil {
+			requestInfo.LogError(err)
+		}
+		requestInfo.LogDuration()
+	}()
+
+	err = checkAPI(req.Api)
+	if err != nil {
+		return nil, requestInfo.WrapError(codes.Unknown, err)
+	}
+
 	c, err := s.connect(ctx)
 	if err != nil {
-		log.Println("Service<<CreateExchange>>. Error: " + err.Error())
-		return nil, err
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 	defer c.Close()
 
@@ -31,8 +38,7 @@ func (s *loggingServiceServer) CreateExchange(ctx context.Context, req *v2.Creat
 	} else {
 		createdAt, err = ptypes.Timestamp(req.Exchange.CreatedAt)
 		if err != nil {
-			log.Println("Service<<CreateExchange>>. Error: " + err.Error())
-			return nil, status.Error(codes.InvalidArgument, "createdAt has invalid format-> "+err.Error())
+			return nil, requestInfo.WrapError(codes.Unknown, err)
 		}
 	}
 
@@ -42,11 +48,8 @@ func (s *loggingServiceServer) CreateExchange(ctx context.Context, req *v2.Creat
 		" VALUES ($1, $2, $3, $4, $5, $6, $7)",
 		createdAt, exch.TypeId, exch.StateId, exch.RequestId, exch.DeclarationId, exch.RegisterId, exch.Content)
 	if err != nil {
-		log.Println("Service<<CreateExchange>>. Error: " + err.Error())
-		return nil, status.Error(codes.Unknown, "failed to insert-> "+err.Error())
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
-
-	log.Println("Service<<CreateExchange>> Duration: ", time.Since(start))
 
 	return &v2.CreateExchangeResponse{
 		Api:    apiVersion,
@@ -55,28 +58,37 @@ func (s *loggingServiceServer) CreateExchange(ctx context.Context, req *v2.Creat
 }
 
 func (s *loggingServiceServer) FindExchanges(ctx context.Context, req *v2.FindExchangesRequest) (*v2.FindExchangesResponse, error) {
-	start := time.Now()
-	if err := checkAPI(req.Api); err != nil {
-		log.Println("Service<<FindExchanges>> Error: " + err.Error())
-		return nil, err
+	var err error
+	requestInfo := request.NewRequestInfo(ctx, serviceName, "FindExchanges")
+	requestInfo.LogRequest()
+	defer func() {
+		if err != nil {
+			requestInfo.LogError(err)
+		}
+		requestInfo.LogDuration()
+	}()
+
+	err = checkAPI(req.Api)
+	if err != nil {
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
+
 	c, err := s.connect(ctx)
 	if err != nil {
-		log.Println("Service<<FindExchanges>> Error: " + err.Error())
-		return nil, err
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 	defer c.Close()
 
 	query, err := createQuery(queryFindExchanges, req)
 	if err != nil {
-		log.Println("Service<<FindExchanges>> Error: " + err.Error())
-		return nil, status.Error(codes.Unknown, "failed to create query-> "+err.Error())
+		requestInfo.LogError(err)
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 
 	rows, err := c.QueryContext(ctx, query)
 	if err != nil {
-		log.Println("Service<<FindExchanges>> Error: " + err.Error())
-		return nil, status.Error(codes.Unknown, "failed to select from exchanges-> "+err.Error())
+		requestInfo.LogError(err)
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 	defer rows.Close()
 
@@ -87,24 +99,22 @@ func (s *loggingServiceServer) FindExchanges(ctx context.Context, req *v2.FindEx
 
 	for rows.Next() {
 		exch := new(v2.Exchange)
-		if err := rows.Scan(&createdAt, &exch.TypeId, &exch.StateId, &exch.RequestId, &exch.DeclarationId, &exch.RegisterId, &exch.Content); err != nil {
-			log.Println("Service<<FindExchanges>> Error: failed to retrieve field values-> " + err.Error())
-			return nil, status.Error(codes.Unknown, "failed to retrieve field values-> "+err.Error())
+		err = rows.Scan(&createdAt, &exch.TypeId, &exch.StateId, &exch.RequestId, &exch.DeclarationId, &exch.RegisterId, &exch.Content)
+		if err != nil {
+			return nil, requestInfo.WrapError(codes.Unknown, err)
 		}
 		exch.CreatedAt, err = ptypes.TimestampProto(createdAt)
 		if err != nil {
-			log.Println("Service<<FindExchanges>> Error: createdAt field has invalid format-> " + err.Error())
-			return nil, status.Error(codes.Unknown, "createdAt field has invalid format-> "+err.Error())
+			return nil, requestInfo.WrapError(codes.Unknown, err)
 		}
 		list = append(list, exch)
 	}
 
-	if err := rows.Err(); err != nil {
-		log.Println("Service<<FindExchanges>> Error: failed to retrieve data-> " + err.Error())
-		return nil, status.Error(codes.Unknown, "failed to retrieve data-> "+err.Error())
+	err = rows.Err()
+	if err != nil {
+		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 
-	log.Println("Service<<FindExchanges>>. Duration:", time.Since(start))
 	return &v2.FindExchangesResponse{
 		Api:       apiVersion,
 		Exchanges: list,
