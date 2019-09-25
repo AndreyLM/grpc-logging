@@ -23,6 +23,7 @@ type ReqInfo interface {
 	GetServiceName() string
 	GetRequestTime() time.Time
 	GetMethodName() string
+	ContextWithMetadata(context.Context) context.Context
 }
 
 // NewRequestInfo - gathers info from metadat and makes request info
@@ -111,6 +112,13 @@ func (i *info) LogDuration() {
 		i.GetRequestUUID(),
 		time.Since(i.GetRequestTime()),
 	)
+}
+
+func (i *info) ContextWithMetadata(ctx context.Context) context.Context {
+	md := metadata.Pairs("request_uuid", i.GetRequestUUID(),
+		"request_time", fmt.Sprintf("%d", i.GetRequestTime().Unix()),
+		"service_name", i.GetServiceName())
+	return metadata.NewOutgoingContext(ctx, md)
 }
 
 func (i *info) GetRequestUUID() string {

@@ -27,6 +27,7 @@ func (s *loggingProxyServer) CreateRule(ctx context.Context, req *v2.CreateRuleR
 
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
+	ctx = requestInfo.ContextWithMetadata(ctx)
 
 	res, err := s.client.CreateRule(ctx, req)
 	if err != nil {
@@ -54,6 +55,7 @@ func (s *loggingProxyServer) FindRules(ctx context.Context, req *v2.FindRulesReq
 
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
+	ctx = requestInfo.ContextWithMetadata(ctx)
 
 	res, err := s.client.FindRules(ctx, req)
 	if err != nil {

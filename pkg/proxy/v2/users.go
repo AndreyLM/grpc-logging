@@ -28,6 +28,7 @@ func (s *loggingProxyServer) CreateUser(ctx context.Context, req *v2.CreateUserR
 
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
+	ctx = requestInfo.ContextWithMetadata(ctx)
 
 	res, err := s.client.CreateUser(ctx, req)
 	if err != nil {
@@ -54,6 +55,7 @@ func (s *loggingProxyServer) FindUsers(ctx context.Context, req *v2.FindUsersReq
 
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
+	ctx = requestInfo.ContextWithMetadata(ctx)
 
 	res, err := s.client.FindUsers(ctx, req)
 	if err != nil {

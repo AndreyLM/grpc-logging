@@ -29,7 +29,7 @@ func RunServer() error {
 		return err
 	}
 
-	log.Println(cfg.GRPCServerAddress)
+	log.Println(cfg.GRPCProxyPort)
 	conn, err := grpc_proto.Dial(cfg.GRPCServerAddress, grpc_proto.WithInsecure())
 	if err != nil {
 		log.Println(err)

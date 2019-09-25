@@ -27,6 +27,7 @@ func (s *loggingProxyServer) CreateExchange(ctx context.Context, req *v2.CreateE
 
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
+	ctx = requestInfo.ContextWithMetadata(ctx)
 
 	res, err := s.client.CreateExchange(ctx, req)
 	if err != nil {
@@ -54,6 +55,7 @@ func (s *loggingProxyServer) FindExchanges(ctx context.Context, req *v2.FindExch
 
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
+	ctx = requestInfo.ContextWithMetadata(ctx)
 
 	res, err := s.client.FindExchanges(ctx, req)
 	if err != nil {
