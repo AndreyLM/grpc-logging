@@ -152,6 +152,50 @@ message FindExchangesResponse {
     repeated Exchange exchanges = 2;
 }
 
+
+//_________________________________________________________________________________________
+//
+// ---------------------- << DECLARATIONS >> -------------------------------------------------
+//_________________________________________________________________________________________
+
+message Declaration {
+    google.protobuf.Timestamp createdAt = 1;  
+    int64 declarationId = 2;
+    string content = 3;
+    int64 userId = 4;
+    string userIp = 5;
+}
+
+
+// CREATE
+message CreateDeclarationRequest {
+    string api = 1;
+    Declaration declaration = 2;
+}
+
+message CreateDeclarationResponse {
+    string api = 1;
+    int32 status = 2; // status = 0 - ok, status > 0 - some error 
+}
+
+// FIND
+message FindDeclarationsRequest {
+    string api = 1;
+    google.protobuf.Timestamp createdAtFrom = 2;
+    google.protobuf.Timestamp createdAtTo = 3;
+    int64 declarationId = 4;
+    int64 userId = 5;
+    string userIp = 6;
+    int32 limit = 7;
+    int32 offset = 8;
+    string orderBy = 9;    
+}
+
+message FindDeclarationsResponse {
+    string api = 1;
+    repeated Declaration declarations = 2;
+}
+
 // SERVICES
 service ExchangeService {
     rpc CreateExchange(CreateExchangeRequest) returns (CreateExchangeResponse);
@@ -168,4 +212,7 @@ service LogginService {
     
     rpc CreateExchange(CreateExchangeRequest) returns (CreateExchangeResponse);
     rpc FindExchanges(FindExchangesRequest) returns (FindExchangesResponse);
+    
+    rpc CreateDeclaration(CreateDeclarationRequest) returns (CreateDeclarationResponse);
+    rpc FindDeclarations(FindDeclarationsRequest) returns (FindDeclarationsResponse);
 }

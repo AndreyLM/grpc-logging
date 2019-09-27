@@ -40,3 +40,15 @@ WHERE 1=1
 {{- if .Model.Limit }} LIMIT {{ .Model.Limit }} {{- end}}	
 {{- if .Model.Offset }} OFFSET {{ .Model.Offset }} {{- end}}		
 {{- if .Model.OrderBy }} ORDER BY {{ .Model.OrderBy }} {{- end}}`
+
+const queryFindDeclarations = `
+SELECT created_at, declaration_id, content, user_id, user_ip FROM declarations
+WHERE 1=1
+{{- if .Model.CreatedAtFrom }} AND created_at >= '{{ call .MakeTime .Model.CreatedAtFrom }}' {{- end}}	
+{{- if .Model.CreatedAtTo }} AND created_at <= '{{call .MakeTime .Model.CreatedAtTo }}' {{- end}}	
+{{- if .Model.DeclarationId }} AND declaration_id = {{ .Model.DeclarationId }} {{- end}}	
+{{- if .Model.UserId }} AND user_id = {{ .Model.UserId }} {{- end}}	
+{{- if .Model.UserIp }} AND user_ip = {{ .Model.UserIp }} {{- end}}	
+{{- if .Model.Limit }} LIMIT {{ .Model.Limit }} {{- end}}	
+{{- if .Model.Offset }} OFFSET {{ .Model.Offset }} {{- end}}		
+{{- if .Model.OrderBy }} ORDER BY {{ .Model.OrderBy }} {{- end}}`

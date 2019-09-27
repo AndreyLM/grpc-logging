@@ -17,7 +17,8 @@ import (
 )
 
 type loggingServiceServer struct {
-	db *sql.DB
+	db    *sql.DB
+	debug bool
 }
 
 func (s *loggingServiceServer) connect(ctx context.Context) (*sql.Conn, error) {
@@ -30,7 +31,9 @@ func (s *loggingServiceServer) connect(ctx context.Context) (*sql.Conn, error) {
 
 // NewLoggingService - creates loggin service
 func NewLoggingService(db *sql.DB) v1.UserLogServiceServer {
-	return &loggingServiceServer{db: db}
+	return &loggingServiceServer{
+		db:    db,
+	}
 }
 
 func (s *loggingServiceServer) CreateUserLog(ctx context.Context, req *v1.CreateUserLogRequest) (*v1.CreateUserLogResponse, error) {

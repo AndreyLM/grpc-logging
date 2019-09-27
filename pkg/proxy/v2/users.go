@@ -13,12 +13,16 @@ import (
 func (s *loggingProxyServer) CreateUser(ctx context.Context, req *v2.CreateUserRequest) (*v2.CreateUserResponse, error) {
 	var err error
 	requestInfo := request.NewRequestInfo(ctx, serviceName, "CreateUser")
-	requestInfo.LogRequest()
+	if s.debug {
+		requestInfo.LogRequest()
+	}
 	defer func() {
 		if err != nil {
 			requestInfo.LogError(err)
 		}
-		requestInfo.LogDuration()
+		if s.debug {
+			requestInfo.LogDuration()
+		}
 	}()
 
 	err = checkAPI(req.Api)
@@ -40,12 +44,16 @@ func (s *loggingProxyServer) CreateUser(ctx context.Context, req *v2.CreateUserR
 func (s *loggingProxyServer) FindUsers(ctx context.Context, req *v2.FindUsersRequest) (*v2.FindUsersResponse, error) {
 	var err error
 	requestInfo := request.NewRequestInfo(ctx, serviceName, "FindUsers")
-	requestInfo.LogRequest()
+	if s.debug {
+		requestInfo.LogRequest()
+	}
 	defer func() {
 		if err != nil {
 			requestInfo.LogError(err)
 		}
-		requestInfo.LogDuration()
+		if s.debug {
+			requestInfo.LogDuration()
+		}
 	}()
 
 	err = checkAPI(req.Api)

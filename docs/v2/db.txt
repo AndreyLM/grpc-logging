@@ -7,7 +7,6 @@ CREATE TABLE users (
 
 SELECT create_hypertable('users', 'created_at');
 
-
 CREATE TABLE rules (
   created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   rule_id     BIGINT NOT NULL,
@@ -29,7 +28,17 @@ CREATE TABLE exchanges (
 );
 
 SELECT create_hypertable('exchanges', 'created_at');
-    
+
+CREATE TABLE declarations (
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    declaration_id  BIGINT NULL,
+    content         TEXT NOT NULL,
+    user_id         BIGINT NULL,
+    user_ip         CHAR(16) NULL
+);
+
+SELECT create_hypertable('declarations', 'created_at');
+
 psql -U admin -W   -  connect to DB with user = admin and prompt to enter password
 \l - show databases
 \c "database name" - connect to db;

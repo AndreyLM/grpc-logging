@@ -20,6 +20,7 @@ import (
 
 // Config - configuration for Server
 type Config struct {
+	DebugMode  bool
 	GRPCPort   string
 	DBHost     string
 	DBPort     string
@@ -33,6 +34,7 @@ func RunServer() error {
 	var logPath string
 	var cfg Config
 
+	flag.BoolVar(&cfg.DebugMode, "debug", false, "Debug mode")
 	flag.StringVar(&logPath, "log-path", "log.txt", "DB schema")
 	flag.StringVar(&cfg.GRPCPort, "grpc-port", "", "gRPC port to bind")
 	flag.StringVar(&cfg.DBHost, "db-host", "", "DB host")
@@ -77,7 +79,7 @@ func RunServer() error {
 		panic(err)
 	}
 
-	v2API := v2.NewLoggingService(db)
+	v2API := v2.NewLoggingService(db, cfg.DebugMode)
 
 	return grpc.RunServer(ctx, v2API, cfg.GRPCPort)
 }

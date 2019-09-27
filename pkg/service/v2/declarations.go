@@ -10,9 +10,9 @@ import (
 	"google.golang.org/grpc/codes"
 )
 
-func (s *loggingServiceServer) CreateRule(ctx context.Context, req *v2.CreateRuleRequest) (*v2.CreateRuleResponse, error) {
+func (s *loggingServiceServer) CreateDeclaration(ctx context.Context, req *v2.CreateDeclarationRequest) (*v2.CreateDeclarationResponse, error) {
 	var err error
-	requestInfo := request.NewRequestInfo(ctx, serviceName, "CreateRule")
+	requestInfo := request.NewRequestInfo(ctx, serviceName, "CreateDeclaration")
 	if s.debug {
 		requestInfo.LogRequest()
 	}
@@ -37,31 +37,31 @@ func (s *loggingServiceServer) CreateRule(ctx context.Context, req *v2.CreateRul
 	defer c.Close()
 
 	var createdAt time.Time
-	if req.Rule.CreatedAt == nil {
+	if req.Declaration.CreatedAt == nil {
 		createdAt = time.Now()
 	} else {
-		createdAt, err = ptypes.Timestamp(req.Rule.CreatedAt)
+		createdAt, err = ptypes.Timestamp(req.Declaration.CreatedAt)
 		if err != nil {
 			return nil, requestInfo.WrapError(codes.Unknown, err)
 		}
 	}
 
-	_, err = c.ExecContext(ctx, "INSERT INTO rules (created_at, rule_id, created_by, content, rule_number)"+
+	_, err = c.ExecContext(ctx, "INSERT INTO declarations (created_at, declaration_id, content, user_id, user_ip)"+
 		" VALUES ($1, $2, $3, $4, $5)",
-		createdAt, req.Rule.RuleId, req.Rule.CreatedBy, req.Rule.Content, req.Rule.RuleNumber)
+		createdAt, req.Declaration.DeclarationId, req.Declaration.Content, req.Declaration.UserId, req.Declaration.UserIp)
 	if err != nil {
 		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 
-	return &v2.CreateRuleResponse{
+	return &v2.CreateDeclarationResponse{
 		Api:    apiVersion,
 		Status: 0,
 	}, nil
 }
 
-func (s *loggingServiceServer) FindRules(ctx context.Context, req *v2.FindRulesRequest) (*v2.FindRulesResponse, error) {
+func (s *loggingServiceServer) FindDeclarations(ctx context.Context, req *v2.FindDeclarationsRequest) (*v2.FindDeclarationsResponse, error) {
 	var err error
-	requestInfo := request.NewRequestInfo(ctx, serviceName, "FindRules")
+	requestInfo := request.NewRequestInfo(ctx, serviceName, "FindDeclarations")
 	if s.debug {
 		requestInfo.LogRequest()
 	}
@@ -84,7 +84,7 @@ func (s *loggingServiceServer) FindRules(ctx context.Context, req *v2.FindRulesR
 	}
 	defer c.Close()
 
-	query, err := createQuery(queryFindRules, req)
+	query, err := createQuery(queryFindDeclarations, req)
 	if err != nil {
 		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
@@ -96,19 +96,19 @@ func (s *loggingServiceServer) FindRules(ctx context.Context, req *v2.FindRulesR
 	defer rows.Close()
 
 	var createdAt time.Time
-	list := []*v2.Rule{}
+	list := []*v2.Declaration{}
 
 	for rows.Next() {
-		rule := new(v2.Rule)
-		err = rows.Scan(&createdAt, &rule.RuleId, &rule.CreatedBy, &rule.Content, &rule.RuleNumber)
+		decl := new(v2.Declaration)
+		err = rows.Scan(&createdAt, &decl.DeclarationId, &decl.Content, &decl.UserId, &decl.UserIp)
 		if err != nil {
 			return nil, requestInfo.WrapError(codes.Unknown, err)
 		}
-		rule.CreatedAt, err = ptypes.TimestampProto(createdAt)
+		decl.CreatedAt, err = ptypes.TimestampProto(createdAt)
 		if err != nil {
 			return nil, requestInfo.WrapError(codes.Unknown, err)
 		}
-		list = append(list, rule)
+		list = append(list, decl)
 	}
 
 	err = rows.Err()
@@ -116,8 +116,8 @@ func (s *loggingServiceServer) FindRules(ctx context.Context, req *v2.FindRulesR
 		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 
-	return &v2.FindRulesResponse{
-		Api:   apiVersion,
-		Rules: list,
+	return &v2.FindDeclarationsResponse{
+		Api:          apiVersion,
+		Declarations: list,
 	}, nil
 }

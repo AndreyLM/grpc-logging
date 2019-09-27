@@ -17,6 +17,7 @@ import (
 
 // Config - configuration for Server
 type Config struct {
+	DebugMode         bool
 	GRPCProxyPort     string
 	GRPCServerAddress string
 }
@@ -38,7 +39,7 @@ func RunServer() error {
 	defer conn.Close()
 
 	cli := cli.NewLogginServiceClient(conn)
-	v1API := v2.NewLoggingProxyServer(cli)
+	v1API := v2.NewLoggingProxyServer(cli, cfg.DebugMode)
 	return grpc.RunServer(ctx, v1API, cfg.GRPCProxyPort)
 }
 
@@ -46,6 +47,7 @@ func getConfig() (*Config, error) {
 	var logPath string
 	var cfg Config
 
+	flag.BoolVar(&cfg.DebugMode, "debug", false, "Debug mode")
 	flag.StringVar(&logPath, "log-path", "log.txt", "DB schema")
 	flag.StringVar(&cfg.GRPCProxyPort, "grpc-proxy-port", "", "gRPC proxy port to bind")
 	flag.StringVar(&cfg.GRPCServerAddress, "grpc-server-address", "", "gRPC server port to connect")

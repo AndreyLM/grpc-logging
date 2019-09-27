@@ -14,14 +14,17 @@ import (
 func (s *loggingServiceServer) CreateUser(ctx context.Context, req *v2.CreateUserRequest) (*v2.CreateUserResponse, error) {
 	var err error
 	requestInfo := request.NewRequestInfo(ctx, serviceName, "CreateUser")
-	requestInfo.LogRequest()
+	if s.debug {
+		requestInfo.LogRequest()
+	}
 	defer func() {
 		if err != nil {
 			requestInfo.LogError(err)
 		}
-		requestInfo.LogDuration()
+		if s.debug {
+			requestInfo.LogDuration()
+		}
 	}()
-
 	err = checkAPI(req.Api)
 	if err != nil {
 		return nil, requestInfo.WrapError(codes.Unknown, err)
@@ -59,12 +62,16 @@ func (s *loggingServiceServer) CreateUser(ctx context.Context, req *v2.CreateUse
 func (s *loggingServiceServer) FindUsers(ctx context.Context, req *v2.FindUsersRequest) (*v2.FindUsersResponse, error) {
 	var err error
 	requestInfo := request.NewRequestInfo(ctx, serviceName, "FindUsers")
-	requestInfo.LogRequest()
+	if s.debug {
+		requestInfo.LogRequest()
+	}
 	defer func() {
 		if err != nil {
 			requestInfo.LogError(err)
 		}
-		requestInfo.LogDuration()
+		if s.debug {
+			requestInfo.LogDuration()
+		}
 	}()
 
 	err = checkAPI(req.Api)

@@ -12,12 +12,16 @@ import (
 func (s *loggingProxyServer) CreateRule(ctx context.Context, req *v2.CreateRuleRequest) (*v2.CreateRuleResponse, error) {
 	var err error
 	requestInfo := request.NewRequestInfo(ctx, serviceName, "CreateRule")
-	requestInfo.LogRequest()
+	if s.debug {
+		requestInfo.LogRequest()
+	}
 	defer func() {
 		if err != nil {
 			requestInfo.LogError(err)
 		}
-		requestInfo.LogDuration()
+		if s.debug {
+			requestInfo.LogDuration()
+		}
 	}()
 
 	err = checkAPI(req.Api)
@@ -40,12 +44,16 @@ func (s *loggingProxyServer) CreateRule(ctx context.Context, req *v2.CreateRuleR
 func (s *loggingProxyServer) FindRules(ctx context.Context, req *v2.FindRulesRequest) (*v2.FindRulesResponse, error) {
 	var err error
 	requestInfo := request.NewRequestInfo(ctx, serviceName, "FindRules")
-	requestInfo.LogRequest()
+	if s.debug {
+		requestInfo.LogRequest()
+	}
 	defer func() {
 		if err != nil {
 			requestInfo.LogError(err)
 		}
-		requestInfo.LogDuration()
+		if s.debug {
+			requestInfo.LogDuration()
+		}
 	}()
 
 	err = checkAPI(req.Api)

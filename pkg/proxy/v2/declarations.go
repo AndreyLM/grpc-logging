@@ -9,9 +9,9 @@ import (
 	"google.golang.org/grpc/codes"
 )
 
-func (s *loggingProxyServer) CreateExchange(ctx context.Context, req *v2.CreateExchangeRequest) (*v2.CreateExchangeResponse, error) {
+func (s *loggingProxyServer) CreateDeclaration(ctx context.Context, req *v2.CreateDeclarationRequest) (*v2.CreateDeclarationResponse, error) {
 	var err error
-	requestInfo := request.NewRequestInfo(ctx, serviceName, "CreateExchange")
+	requestInfo := request.NewRequestInfo(ctx, serviceName, "CreateDeclaration")
 	if s.debug {
 		requestInfo.LogRequest()
 	}
@@ -33,17 +33,16 @@ func (s *loggingProxyServer) CreateExchange(ctx context.Context, req *v2.CreateE
 	defer cancel()
 	ctx = requestInfo.ContextWithMetadata(ctx)
 
-	res, err := s.client.CreateExchange(ctx, req)
+	res, err := s.client.CreateDeclaration(ctx, req)
 	if err != nil {
 		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
-
 	return res, nil
 }
 
-func (s *loggingProxyServer) FindExchanges(ctx context.Context, req *v2.FindExchangesRequest) (*v2.FindExchangesResponse, error) {
+func (s *loggingProxyServer) FindDeclarations(ctx context.Context, req *v2.FindDeclarationsRequest) (*v2.FindDeclarationsResponse, error) {
 	var err error
-	requestInfo := request.NewRequestInfo(ctx, serviceName, "FindExchanges")
+	requestInfo := request.NewRequestInfo(ctx, serviceName, "FindDeclarations")
 	if s.debug {
 		requestInfo.LogRequest()
 	}
@@ -65,11 +64,9 @@ func (s *loggingProxyServer) FindExchanges(ctx context.Context, req *v2.FindExch
 	defer cancel()
 	ctx = requestInfo.ContextWithMetadata(ctx)
 
-	res, err := s.client.FindExchanges(ctx, req)
+	res, err := s.client.FindDeclarations(ctx, req)
 	if err != nil {
 		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
-
-	requestInfo.LogDuration()
 	return res, nil
 }

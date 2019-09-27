@@ -13,12 +13,16 @@ import (
 func (s *loggingServiceServer) CreateExchange(ctx context.Context, req *v2.CreateExchangeRequest) (*v2.CreateExchangeResponse, error) {
 	var err error
 	requestInfo := request.NewRequestInfo(ctx, serviceName, "CreateExchange")
-	requestInfo.LogRequest()
+	if s.debug {
+		requestInfo.LogRequest()
+	}
 	defer func() {
 		if err != nil {
 			requestInfo.LogError(err)
 		}
-		requestInfo.LogDuration()
+		if s.debug {
+			requestInfo.LogDuration()
+		}
 	}()
 
 	err = checkAPI(req.Api)
@@ -60,12 +64,16 @@ func (s *loggingServiceServer) CreateExchange(ctx context.Context, req *v2.Creat
 func (s *loggingServiceServer) FindExchanges(ctx context.Context, req *v2.FindExchangesRequest) (*v2.FindExchangesResponse, error) {
 	var err error
 	requestInfo := request.NewRequestInfo(ctx, serviceName, "FindExchanges")
-	requestInfo.LogRequest()
+	if s.debug {
+		requestInfo.LogRequest()
+	}
 	defer func() {
 		if err != nil {
 			requestInfo.LogError(err)
 		}
-		requestInfo.LogDuration()
+		if s.debug {
+			requestInfo.LogDuration()
+		}
 	}()
 
 	err = checkAPI(req.Api)
