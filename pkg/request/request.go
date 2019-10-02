@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"runtime"
 	"strconv"
 	"time"
 
@@ -86,11 +87,15 @@ func (i *info) LogRequest() {
 
 // LogError - log error
 func (i *info) LogError(err error) {
+	programCounter, file, line, _ := runtime.Caller(1)
+	fn := runtime.FuncForPC(programCounter)
+	errMsg := fmt.Sprintf("[%s: %s %d] %s", file, fn.Name(), line, err)
+
 	log.Printf("<<%s:%s, RequestUUID:'%s'>>\n Error: %s\n",
 		i.GetServiceName(),
 		i.GetMethodName(),
 		i.GetRequestUUID(),
-		err,
+		errMsg,
 	)
 }
 

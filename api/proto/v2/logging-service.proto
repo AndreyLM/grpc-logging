@@ -45,6 +45,7 @@ message FindUsersRequest {
 message FindUsersResponse {
     string api = 1;
     repeated User users = 2;
+    int64 totalCount = 3;
 }
 
 // SERVICES
@@ -95,6 +96,7 @@ message FindRulesRequest {
 message FindRulesResponse {
     string api = 1;
     repeated Rule rules = 2;
+    int64 totalCount = 3;
 }
 
 // SERVICES
@@ -150,6 +152,7 @@ message FindExchangesRequest {
 message FindExchangesResponse {
     string api = 1;
     repeated Exchange exchanges = 2;
+    int64 totalCount = 3;
 }
 
 
@@ -194,6 +197,7 @@ message FindDeclarationsRequest {
 message FindDeclarationsResponse {
     string api = 1;
     repeated Declaration declarations = 2;
+    int64 totalCount = 3;
 }
 
 // SERVICES

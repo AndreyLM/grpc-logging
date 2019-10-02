@@ -103,8 +103,6 @@ func (s *loggingServiceServer) FindExchanges(ctx context.Context, req *v2.FindEx
 	var createdAt time.Time
 	list := []*v2.Exchange{}
 
-	// SELECT created_at, type_id, state_id, request_id, declaration_id, register_id, content FROM users
-
 	for rows.Next() {
 		exch := new(v2.Exchange)
 		err = rows.Scan(&createdAt, &exch.TypeId, &exch.StateId, &exch.RequestId, &exch.DeclarationId, &exch.RegisterId, &exch.Content)
@@ -123,8 +121,16 @@ func (s *loggingServiceServer) FindExchanges(ctx context.Context, req *v2.FindEx
 		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 
-	return &v2.FindExchangesResponse{
+	response := &v2.FindExchangesResponse{
 		Api:       apiVersion,
 		Exchanges: list,
-	}, nil
+	}
+
+	query, err = createQuery(queryTotalCountExchanges, req)
+	if err != nil {
+		return response, nil
+	}
+
+	response.TotalCount, err = s.getCount(ctx, query, c)
+	return response, nil
 }

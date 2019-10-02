@@ -116,8 +116,16 @@ func (s *loggingServiceServer) FindRules(ctx context.Context, req *v2.FindRulesR
 		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 
-	return &v2.FindRulesResponse{
+	response := &v2.FindRulesResponse{
 		Api:   apiVersion,
 		Rules: list,
-	}, nil
+	}
+
+	query, err = createQuery(queryTotalCountRules, req)
+	if err != nil {
+		return response, nil
+	}
+
+	response.TotalCount, err = s.getCount(ctx, query, c)
+	return response, nil
 }

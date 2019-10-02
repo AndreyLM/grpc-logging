@@ -117,8 +117,16 @@ func (s *loggingServiceServer) FindUsers(ctx context.Context, req *v2.FindUsersR
 		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 
-	return &v2.FindUsersResponse{
+	response := &v2.FindUsersResponse{
 		Api:   apiVersion,
 		Users: list,
-	}, nil
+	}
+
+	query, err = createQuery(queryTotalCountUsers, req)
+	if err != nil {
+		return response, nil
+	}
+
+	response.TotalCount, err = s.getCount(ctx, query, c)
+	return response, nil
 }

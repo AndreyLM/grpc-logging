@@ -42,5 +42,5 @@ SELECT create_hypertable('declarations', 'created_at');
 psql -U admin -W   -  connect to DB with user = admin and prompt to enter password
 \l - show databases
 \c "database name" - connect to db;
-\db - show tables;
+\dt - show tables;
 \d "table name" - show table schema

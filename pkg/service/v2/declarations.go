@@ -116,8 +116,16 @@ func (s *loggingServiceServer) FindDeclarations(ctx context.Context, req *v2.Fin
 		return nil, requestInfo.WrapError(codes.Unknown, err)
 	}
 
-	return &v2.FindDeclarationsResponse{
+	response := &v2.FindDeclarationsResponse{
 		Api:          apiVersion,
 		Declarations: list,
-	}, nil
+	}
+
+	query, err = createQuery(queryTotalCountDeclarations, req)
+	if err != nil {
+		return response, nil
+	}
+
+	response.TotalCount, err = s.getCount(ctx, query, c)
+	return response, nil
 }
