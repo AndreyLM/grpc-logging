@@ -189,9 +189,10 @@ message FindDeclarationsRequest {
     int64 declarationId = 4;
     int64 userId = 5;
     string userIp = 6;
-    int32 limit = 7;
-    int32 offset = 8;
-    string orderBy = 9;    
+    string content = 7;
+    int32 limit = 8;
+    int32 offset = 9;
+    string orderBy = 10;    
 }
 
 message FindDeclarationsResponse {
