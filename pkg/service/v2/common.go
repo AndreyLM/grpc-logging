@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	apiVersion  = "v2"
+	apiVersion  = "v2.0.1"
 	serviceName = "loggin-service"
 )
 
